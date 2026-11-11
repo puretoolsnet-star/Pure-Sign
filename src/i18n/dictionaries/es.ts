@@ -50,8 +50,30 @@ export const es: Dictionary = {
     heroTitle: "Todas las herramientas de firma en un espacio de trabajo oscuro.",
     heroSubtitle:
       "Firma, sella, numera y rellena documentos PDF en privado en tu navegador.",
-    toolsAria: "Herramientas de firma PDF",
-    toolsHeading: "Herramientas de firma PDF",
+    toolsAria: "Catálogo de herramientas PureSign",
+    toolsHeading: "Catálogo de herramientas",
+    toolsCatalogHint:
+      "Contrae y expande categorías con la flecha — todo se ejecuta localmente en el navegador.",
+    expandCategory: "Expandir categoría",
+    collapseCategory: "Contraer categoría",
+    toolCategories: {
+      signaturesStamps: {
+        title: "Firmas y sellos",
+        subtitle: "Firma, sellos y marcas de fecha y hora.",
+      },
+      formsLayout: {
+        title: "Formularios y maquetación",
+        subtitle: "Rellenar, numeración, encabezados y censura.",
+      },
+      analysisSecurity: {
+        title: "Análisis y seguridad",
+        subtitle: "Texto, cifrado y desbloqueo.",
+      },
+      proBatch: {
+        title: "Pro / operaciones por lotes",
+        subtitle: "Firma por lotes con exportación ZIP.",
+      },
+    },
     openTool: "Abrir →",
   },
   footer: {
@@ -64,6 +86,7 @@ export const es: Dictionary = {
     dropzoneTitle: "Suelta un PDF aquí o haz clic para elegir",
     dropzoneHint: "El archivo se procesa solo en este dispositivo.",
     downloadPdf: "Descargar PDF",
+    dropzoneMultipleTitle: "Suelta uno o más PDF aquí",
     processing: "Procesando…",
     clear: "Borrar",
     apply: "Aplicar",
@@ -94,6 +117,16 @@ export const es: Dictionary = {
       errors: {
         invalid: "Elige un archivo PDF.",
         failed: "No se pudo aplicar el sello.",
+      },
+    },
+    "date-stamp": {
+      title: "Sello de fecha / hora",
+      description: "Marca automática de fecha, hora o ambas en el PDF.",
+      hint: "Elige el formato y haz clic en la página.",
+      action: "Descargar PDF con marca temporal",
+      errors: {
+        invalid: "Elige un archivo PDF.",
+        failed: "No se pudo aplicar la marca de fecha.",
       },
     },
     "fill-form": {
@@ -134,6 +167,36 @@ export const es: Dictionary = {
       errors: {
         invalid: "Elige un archivo PDF.",
         failed: "No se pudo extraer el texto.",
+      },
+    },
+    "protect-pdf": {
+      title: "Contraseña y cifrado PDF",
+      description: "Establece una contraseña de apertura del documento.",
+      hint: "La contraseña se aplica en local; no la guardamos.",
+      action: "Descargar PDF cifrado",
+      errors: {
+        invalid: "Elige un archivo PDF.",
+        failed: "No se pudo cifrar el PDF.",
+      },
+    },
+    "unlock-pdf": {
+      title: "Desbloquear PDF",
+      description: "Quita la contraseña o restricciones de impresión y copia.",
+      hint: "Introduce la contraseña actual si el archivo está protegido.",
+      action: "Descargar PDF desbloqueado",
+      errors: {
+        invalid: "Elige un archivo PDF.",
+        failed: "No se pudo desbloquear el PDF. Comprueba la contraseña.",
+      },
+    },
+    "batch-sign": {
+      title: "Firma por lotes",
+      description: "Una firma para varios PDF, exportados en ZIP.",
+      hint: "Añade archivos, coloca la firma en la vista previa y exporta.",
+      action: "Aplicar a todos",
+      errors: {
+        invalid: "Añade al menos un PDF válido.",
+        failed: "No se pudo firmar el lote.",
       },
     },
   },
@@ -197,6 +260,34 @@ export const es: Dictionary = {
     empty: "No se encontró una capa de texto en este documento.",
     downloadTxt: "Descargar .txt",
     pagesExtracted: (count) => `Páginas procesadas: ${count}`,
+  },
+  dateStamp: {
+    formatLabel: "Formato del sello",
+    formatDate: "Fecha",
+    formatTime: "Hora",
+    formatDateTime: "Fecha y hora",
+    previewLabel: "Vista previa",
+    placeHint: "Haz clic en la página para colocar fecha u hora.",
+    size: "Tamaño",
+    color: "Color",
+  },
+  protect: {
+    passwordLabel: "Contraseña de apertura",
+    passwordConfirm: "Confirmar contraseña",
+    mismatch: "Las contraseñas no coinciden.",
+    minLength: "Usa al menos 4 caracteres.",
+  },
+  unlock: {
+    passwordLabel: "Contraseña actual (si la hay)",
+    passwordHint: "Déjalo vacío si el PDF no tiene contraseña",
+    wrongPassword: "Contraseña incorrecta o archivo dañado.",
+  },
+  batchSign: {
+    filesSelected: (count) => `Archivos seleccionados: ${count}`,
+    clearList: "Vaciar lista",
+    positionNote:
+      "La posición en la vista previa se aplica a la página 1 de cada PDF del lote.",
+    zipAction: "Descargar ZIP con PDF firmados",
   },
   botProtection: {
     rateLimited:

@@ -34,6 +34,15 @@ export type Dictionary = {
     heroSubtitle: string;
     toolsAria: string;
     toolsHeading: string;
+    toolsCatalogHint: string;
+    expandCategory: string;
+    collapseCategory: string;
+    toolCategories: {
+      signaturesStamps: { title: string; subtitle: string };
+      formsLayout: { title: string; subtitle: string };
+      analysisSecurity: { title: string; subtitle: string };
+      proBatch: { title: string; subtitle: string };
+    };
     openTool: string;
   };
   footer: {
@@ -46,6 +55,7 @@ export type Dictionary = {
     dropzoneTitle: string;
     dropzoneHint: string;
     downloadPdf: string;
+    dropzoneMultipleTitle: string;
     processing: string;
     clear: string;
     apply: string;
@@ -128,6 +138,33 @@ export type Dictionary = {
     empty: string;
     downloadTxt: string;
     pagesExtracted: (count: number) => string;
+  };
+  dateStamp: {
+    formatLabel: string;
+    formatDate: string;
+    formatTime: string;
+    formatDateTime: string;
+    previewLabel: string;
+    placeHint: string;
+    size: string;
+    color: string;
+  };
+  protect: {
+    passwordLabel: string;
+    passwordConfirm: string;
+    mismatch: string;
+    minLength: string;
+  };
+  unlock: {
+    passwordLabel: string;
+    passwordHint: string;
+    wrongPassword: string;
+  };
+  batchSign: {
+    filesSelected: (count: number) => string;
+    clearList: string;
+    positionNote: string;
+    zipAction: string;
   };
   botProtection: {
     rateLimited: string;

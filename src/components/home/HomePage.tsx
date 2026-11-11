@@ -1,55 +1,12 @@
 "use client";
 
-import {
-  Eraser,
-  PenTool,
-  TextCursorInput,
-  Hash,
-  Lock,
-  ScanText,
-  ServerOff,
-  ShieldCheck,
-  Stamp,
-} from "lucide-react";
+import { Lock, ServerOff, ShieldCheck } from "lucide-react";
 
-import { HomeToolCard } from "@/components/home/HomeToolCard";
+import { HomeToolCategory } from "@/components/home/HomeToolCategory";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { useI18n } from "@/i18n/context";
-import type { ToolId } from "@/i18n/locales";
-
-const TOOL_META = [
-  {
-    id: "sign" as const,
-    icon: PenTool,
-    accent: "from-primary/20 to-primary/5",
-  },
-  {
-    id: "stamp" as const,
-    icon: Stamp,
-    accent: "from-rose-500/20 to-rose-500/5",
-  },
-  {
-    id: "fill-form" as const,
-    icon: TextCursorInput,
-    accent: "from-violet-500/20 to-violet-500/5",
-  },
-  {
-    id: "page-numbers" as const,
-    icon: Hash,
-    accent: "from-amber-500/20 to-amber-500/5",
-  },
-  {
-    id: "redact" as const,
-    icon: Eraser,
-    accent: "from-slate-400/20 to-slate-400/5",
-  },
-  {
-    id: "extract-text" as const,
-    icon: ScanText,
-    accent: "from-emerald-500/20 to-emerald-500/5",
-  },
-] satisfies Array<{ id: ToolId; icon: typeof PenTool; accent: string }>;
+import { HOME_TOOL_CATALOG } from "@/lib/tools/catalog";
 
 export function HomePage() {
   const { t } = useI18n();
@@ -78,27 +35,27 @@ export function HomePage() {
                 key={text}
                 className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-slate-800/60 bg-surface/70 px-3 py-1.5 text-xs font-medium text-gray-200 sm:text-sm"
               >
-                <Icon className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
+                <Icon className="h-3.5 w-3.5 shrink-0 text-cyan-400" aria-hidden />
                 <span className="min-w-0 [overflow-wrap:anywhere]">{text}</span>
               </li>
             ))}
           </ul>
         </section>
 
-        <section aria-labelledby="tools-heading" className="w-full min-w-0">
+        <section aria-labelledby="tools-heading" className="w-full min-w-0 space-y-4 sm:space-y-5">
           <h2
             id="tools-heading"
-            className="mb-4 text-lg font-semibold tracking-tight text-white sm:mb-5 sm:text-xl"
+            className="text-lg font-semibold tracking-tight text-white sm:text-xl"
           >
             {t.home.toolsHeading}
           </h2>
-          <div className="grid w-full min-w-0 shrink-0 grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {TOOL_META.map((tool) => (
-              <HomeToolCard
-                key={tool.id}
-                toolId={tool.id}
-                icon={tool.icon}
-                accent={tool.accent}
+          <p className="max-w-2xl text-sm text-gray-400">{t.home.toolsCatalogHint}</p>
+          <div className="flex flex-col gap-4 sm:gap-5">
+            {HOME_TOOL_CATALOG.map((category) => (
+              <HomeToolCategory
+                key={category.categoryKey}
+                categoryKey={category.categoryKey}
+                tools={category.tools}
               />
             ))}
           </div>

@@ -50,8 +50,30 @@ export const de: Dictionary = {
     heroTitle: "Alle Signatur-Tools in einem dunklen Arbeitsbereich.",
     heroSubtitle:
       "Unterschreiben, stempeln, nummerieren und PDF-Formulare privat im Browser ausfüllen.",
-    toolsAria: "PDF-Signaturwerkzeuge",
-    toolsHeading: "PDF-Signaturwerkzeuge",
+    toolsAria: "PureSign-Toolkatalog",
+    toolsHeading: "Toolkatalog",
+    toolsCatalogHint:
+      "Kategorien per Pfeil ein- und ausklappen — alles läuft lokal im Browser.",
+    expandCategory: "Kategorie aufklappen",
+    collapseCategory: "Kategorie zuklappen",
+    toolCategories: {
+      signaturesStamps: {
+        title: "Unterschriften & Stempel",
+        subtitle: "Signieren, Siegel und Datum-/Zeitstempel.",
+      },
+      formsLayout: {
+        title: "Formulare & Layout",
+        subtitle: "Ausfüllen, Nummerierung, Kopf-/Fußzeilen, Schwärzen.",
+      },
+      analysisSecurity: {
+        title: "Analyse & Sicherheit",
+        subtitle: "Text, Verschlüsselung und Entsperren.",
+      },
+      proBatch: {
+        title: "Pro / Stapel",
+        subtitle: "Stapelsignatur mit ZIP-Export.",
+      },
+    },
     openTool: "Öffnen →",
   },
   footer: {
@@ -64,6 +86,7 @@ export const de: Dictionary = {
     dropzoneTitle: "PDF hierher ziehen oder klicken zum Auswählen",
     dropzoneHint: "Die Datei wird nur auf diesem Gerät verarbeitet.",
     downloadPdf: "PDF herunterladen",
+    dropzoneMultipleTitle: "Eine oder mehrere PDFs hierher ziehen",
     processing: "Verarbeitung…",
     clear: "Leeren",
     apply: "Anwenden",
@@ -94,6 +117,16 @@ export const de: Dictionary = {
       errors: {
         invalid: "Bitte eine PDF-Datei wählen.",
         failed: "Stempel konnte nicht angewendet werden.",
+      },
+    },
+    "date-stamp": {
+      title: "Datum- / Zeitstempel",
+      description: "Aktuelles Datum, Uhrzeit oder beides auf dem PDF platzieren.",
+      hint: "Format wählen und auf die Seite klicken.",
+      action: "PDF mit Zeitstempel herunterladen",
+      errors: {
+        invalid: "Bitte eine PDF-Datei wählen.",
+        failed: "Zeitstempel konnte nicht angewendet werden.",
       },
     },
     "fill-form": {
@@ -134,6 +167,36 @@ export const de: Dictionary = {
       errors: {
         invalid: "Bitte eine PDF-Datei wählen.",
         failed: "Text konnte nicht extrahiert werden.",
+      },
+    },
+    "protect-pdf": {
+      title: "PDF mit Passwort schützen",
+      description: "Dokument mit einem Öffnungspasswort verschlüsseln.",
+      hint: "Passwort wird nur lokal angewendet — wir speichern es nicht.",
+      action: "Verschlüsseltes PDF herunterladen",
+      errors: {
+        invalid: "Bitte eine PDF-Datei wählen.",
+        failed: "PDF konnte nicht verschlüsselt werden.",
+      },
+    },
+    "unlock-pdf": {
+      title: "PDF entsperren",
+      description: "Passwort oder Druck-/Bearbeitungssperren entfernen.",
+      hint: "Aktuelles Passwort eingeben, falls geschützt.",
+      action: "Entsperrtes PDF herunterladen",
+      errors: {
+        invalid: "Bitte eine PDF-Datei wählen.",
+        failed: "PDF konnte nicht entsperrt werden. Passwort prüfen.",
+      },
+    },
+    "batch-sign": {
+      title: "Stapelsignatur",
+      description: "Eine Signatur für mehrere PDFs, Export als ZIP.",
+      hint: "Dateien hinzufügen, Signatur platzieren, Paket exportieren.",
+      action: "Auf alle anwenden",
+      errors: {
+        invalid: "Mindestens eine gültige PDF hinzufügen.",
+        failed: "Stapel konnte nicht signiert werden.",
       },
     },
   },
@@ -197,6 +260,34 @@ export const de: Dictionary = {
     empty: "In diesem Dokument wurde keine Textschicht gefunden.",
     downloadTxt: ".txt herunterladen",
     pagesExtracted: (count) => `Verarbeitete Seiten: ${count}`,
+  },
+  dateStamp: {
+    formatLabel: "Stempelformat",
+    formatDate: "Datum",
+    formatTime: "Uhrzeit",
+    formatDateTime: "Datum & Uhrzeit",
+    previewLabel: "Vorschau",
+    placeHint: "Auf die Seite klicken, um Datum oder Uhrzeit zu setzen.",
+    size: "Größe",
+    color: "Farbe",
+  },
+  protect: {
+    passwordLabel: "Öffnungspasswort",
+    passwordConfirm: "Passwort bestätigen",
+    mismatch: "Passwörter stimmen nicht überein.",
+    minLength: "Mindestens 4 Zeichen verwenden.",
+  },
+  unlock: {
+    passwordLabel: "Aktuelles Passwort (falls vorhanden)",
+    passwordHint: "Leer lassen, wenn kein Passwort gesetzt ist",
+    wrongPassword: "Falsches Passwort oder beschädigte Datei.",
+  },
+  batchSign: {
+    filesSelected: (count) => `Ausgewählte Dateien: ${count}`,
+    clearList: "Liste leeren",
+    positionNote:
+      "Die Position in der Vorschau gilt für Seite 1 jedes PDF im Stapel.",
+    zipAction: "ZIP mit signierten PDFs herunterladen",
   },
   botProtection: {
     rateLimited:

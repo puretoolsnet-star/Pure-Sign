@@ -532,6 +532,134 @@ export const SEO_COPY: SeoCatalog = {
       ],
     },
   },
+  "date-stamp": {
+    uk: {
+      title: "Штамп дати та часу на PDF | PureSign",
+      description: "Поставте мітку дати, часу або обох на PDF локально у браузері.",
+      keywords: ["штамп дати PDF", "час на PDF", "PureSign"],
+    },
+    en: {
+      title: "PDF date and time stamp | PureSign",
+      description: "Place a live date, time, or datetime stamp on a PDF in your browser.",
+      keywords: ["PDF date stamp", "PDF timestamp", "PureSign"],
+    },
+    de: {
+      title: "PDF Datum- und Zeitstempel | PureSign",
+      description: "Datum, Uhrzeit oder beides lokal auf ein PDF setzen.",
+      keywords: ["PDF Zeitstempel", "PDF Datum", "PureSign"],
+    },
+    fr: {
+      title: "Tampon date et heure PDF | PureSign",
+      description: "Horodatez un PDF localement dans le navigateur.",
+      keywords: ["tampon date PDF", "horodatage PDF", "PureSign"],
+    },
+    es: {
+      title: "Sello de fecha y hora en PDF | PureSign",
+      description: "Marca de fecha u hora en PDF de forma local.",
+      keywords: ["sello fecha PDF", "marca temporal PDF", "PureSign"],
+    },
+    pl: {
+      title: "Stempel daty i czasu PDF | PureSign",
+      description: "Znacznik daty lub godziny na PDF lokalnie w przeglądarce.",
+      keywords: ["stempel daty PDF", "znacznik czasu PDF", "PureSign"],
+    },
+  },
+  "protect-pdf": {
+    uk: {
+      title: "Зашифрувати PDF паролем | PureSign",
+      description: "Встановіть пароль відкриття PDF локально у браузері.",
+      keywords: ["зашифрувати PDF", "пароль PDF", "PureSign"],
+    },
+    en: {
+      title: "Password-protect a PDF | PureSign",
+      description: "Encrypt a PDF with an opening password in your browser.",
+      keywords: ["encrypt PDF", "PDF password", "PureSign"],
+    },
+    de: {
+      title: "PDF mit Passwort schützen | PureSign",
+      description: "PDF lokal mit einem Öffnungspasswort verschlüsseln.",
+      keywords: ["PDF verschlüsseln", "PDF Passwort", "PureSign"],
+    },
+    fr: {
+      title: "Protéger un PDF par mot de passe | PureSign",
+      description: "Chiffrez un PDF avec un mot de passe d’ouverture en local.",
+      keywords: ["chiffrer PDF", "mot de passe PDF", "PureSign"],
+    },
+    es: {
+      title: "Proteger PDF con contraseña | PureSign",
+      description: "Cifra un PDF con contraseña de apertura en el navegador.",
+      keywords: ["cifrar PDF", "contraseña PDF", "PureSign"],
+    },
+    pl: {
+      title: "Zabezpiecz PDF hasłem | PureSign",
+      description: "Szyfruj PDF hasłem otwarcia lokalnie w przeglądarce.",
+      keywords: ["szyfrowanie PDF", "hasło PDF", "PureSign"],
+    },
+  },
+  "unlock-pdf": {
+    uk: {
+      title: "Розблокувати PDF онлайн | PureSign",
+      description: "Зніміть пароль або обмеження з PDF у браузері.",
+      keywords: ["розблокувати PDF", "зняти пароль PDF", "PureSign"],
+    },
+    en: {
+      title: "Unlock a PDF online | PureSign",
+      description: "Remove a PDF password or restrictions in your browser.",
+      keywords: ["unlock PDF", "remove PDF password", "PureSign"],
+    },
+    de: {
+      title: "PDF entsperren online | PureSign",
+      description: "Passwort oder PDF-Sperren lokal entfernen.",
+      keywords: ["PDF entsperren", "PDF Passwort entfernen", "PureSign"],
+    },
+    fr: {
+      title: "Déverrouiller un PDF en ligne | PureSign",
+      description: "Supprimez le mot de passe ou les restrictions en local.",
+      keywords: ["déverrouiller PDF", "mot de passe PDF", "PureSign"],
+    },
+    es: {
+      title: "Desbloquear PDF online | PureSign",
+      description: "Quita la contraseña o restricciones en el navegador.",
+      keywords: ["desbloquear PDF", "quitar contraseña PDF", "PureSign"],
+    },
+    pl: {
+      title: "Odblokuj PDF online | PureSign",
+      description: "Usuń hasło lub ograniczenia PDF lokalnie.",
+      keywords: ["odblokuj PDF", "usuń hasło PDF", "PureSign"],
+    },
+  },
+  "batch-sign": {
+    uk: {
+      title: "Пакетне підписання PDF | PureSign",
+      description: "Підпишіть кілька PDF одним підписом і завантажте ZIP локально.",
+      keywords: ["пакетне підписання PDF", "ZIP підписані PDF", "PureSign"],
+    },
+    en: {
+      title: "Batch sign PDFs | PureSign",
+      description: "Sign multiple PDFs with one signature and download a ZIP pack.",
+      keywords: ["batch sign PDF", "sign multiple PDF", "PureSign"],
+    },
+    de: {
+      title: "PDF-Stapelsignatur | PureSign",
+      description: "Mehrere PDFs mit einer Signatur signieren und als ZIP laden.",
+      keywords: ["PDF Stapel signieren", "mehrere PDF signieren", "PureSign"],
+    },
+    fr: {
+      title: "Signature PDF par lot | PureSign",
+      description: "Signez plusieurs PDF avec une signature et exportez en ZIP.",
+      keywords: ["signature lot PDF", "signer plusieurs PDF", "PureSign"],
+    },
+    es: {
+      title: "Firma PDF por lotes | PureSign",
+      description: "Firma varios PDF con una sola firma y descarga un ZIP.",
+      keywords: ["firmar PDF por lotes", "firma múltiple PDF", "PureSign"],
+    },
+    pl: {
+      title: "Podpis wsadowy PDF | PureSign",
+      description: "Podpisz wiele PDF jednym podpisem i pobierz archiwum ZIP.",
+      keywords: ["podpis wsadowy PDF", "wiele PDF podpis", "PureSign"],
+    },
+  },
 };
 
 export function getSeoCopy(page: SeoPageId, locale: Locale): SeoCopy {

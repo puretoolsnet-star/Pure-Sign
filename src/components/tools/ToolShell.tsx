@@ -43,17 +43,17 @@ export function ToolShell({ toolId, icon: Icon, children, className }: ToolShell
           {t.common.backToTools}
         </Link>
 
-        <div className="mt-4 inline-flex max-w-full items-center gap-1.5 rounded-full border border-accent/25 bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
-          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+        <div className="mt-4 inline-flex max-w-full items-center gap-1.5 rounded-full border border-cyan-500/25 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-300">
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" aria-hidden />
           <span className="min-w-0 truncate">{t.security.toolNote}</span>
         </div>
 
         <div className="mt-6 flex min-w-0 items-start gap-3 sm:gap-4">
           <div
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 ring-1 ring-primary/30 sm:h-12 sm:w-12"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-500/15 ring-1 ring-cyan-500/30 sm:h-12 sm:w-12"
             aria-hidden
           >
-            <Icon className="h-5 w-5 text-primary sm:h-6 sm:w-6" aria-hidden />
+            <Icon className="h-5 w-5 text-cyan-400 sm:h-6 sm:w-6" aria-hidden />
           </div>
           <div className="min-w-0 flex-1">
             <h1 className="text-xl font-semibold tracking-tight text-white sm:text-3xl">

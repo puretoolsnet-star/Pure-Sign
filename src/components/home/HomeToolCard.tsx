@@ -33,7 +33,7 @@ export function HomeToolCard({ toolId, icon: Icon, accent }: HomeToolCardProps) 
       <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-400">
         {copy.description}
       </p>
-      <span className="mt-4 text-sm font-medium text-primary transition-colors group-hover:text-blue-300">
+      <span className="mt-4 text-sm font-medium text-cyan-400 transition-colors group-hover:text-cyan-300">
         {t.home.openTool}
       </span>
     </Link>

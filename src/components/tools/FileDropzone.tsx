@@ -11,6 +11,7 @@ type FileDropzoneProps = {
   hint: string;
   onFiles: (files: File[]) => void;
   disabled?: boolean;
+  multiple?: boolean;
 };
 
 export function FileDropzone({
@@ -19,6 +20,7 @@ export function FileDropzone({
   hint,
   onFiles,
   disabled = false,
+  multiple = false,
 }: FileDropzoneProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -80,6 +82,7 @@ export function FileDropzone({
         ref={inputRef}
         type="file"
         accept={accept}
+        multiple={multiple}
         className="hidden"
         disabled={disabled}
         onChange={(event) => {

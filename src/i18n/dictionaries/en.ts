@@ -50,8 +50,30 @@ export const en: Dictionary = {
     heroTitle: "Every document-signing tool in one dark workspace.",
     heroSubtitle:
       "Sign, stamp, number, and fill PDF documents privately in your browser.",
-    toolsAria: "PDF signing tools",
-    toolsHeading: "PDF signing tools",
+    toolsAria: "PureSign tool catalog",
+    toolsHeading: "Tool catalog",
+    toolsCatalogHint:
+      "Collapse and expand categories with the arrow — everything runs locally in your browser.",
+    expandCategory: "Expand category",
+    collapseCategory: "Collapse category",
+    toolCategories: {
+      signaturesStamps: {
+        title: "Signatures & stamps",
+        subtitle: "Sign, seal, and date-time stamps on PDFs.",
+      },
+      formsLayout: {
+        title: "Forms & layout",
+        subtitle: "Fill forms, numbering, headers, and redaction.",
+      },
+      analysisSecurity: {
+        title: "Analysis & security",
+        subtitle: "Text extraction, encryption, and unlocking.",
+      },
+      proBatch: {
+        title: "Pro / batch",
+        subtitle: "Batch signing with ZIP export.",
+      },
+    },
     openTool: "Open →",
   },
   footer: {
@@ -64,6 +86,7 @@ export const en: Dictionary = {
     dropzoneTitle: "Drop a PDF here or click to browse",
     dropzoneHint: "The file is processed only on this device.",
     downloadPdf: "Download PDF",
+    dropzoneMultipleTitle: "Drop one or more PDFs here",
     processing: "Processing…",
     clear: "Clear",
     apply: "Apply",
@@ -94,6 +117,16 @@ export const en: Dictionary = {
       errors: {
         invalid: "Choose a PDF file.",
         failed: "Could not apply the stamp.",
+      },
+    },
+    "date-stamp": {
+      title: "Date / time stamp",
+      description: "Place a live date, time, or combined stamp on the PDF.",
+      hint: "Pick a format and click the page to place the stamp.",
+      action: "Download stamped PDF",
+      errors: {
+        invalid: "Choose a PDF file.",
+        failed: "Could not apply the date stamp.",
       },
     },
     "fill-form": {
@@ -134,6 +167,36 @@ export const en: Dictionary = {
       errors: {
         invalid: "Choose a PDF file.",
         failed: "Could not extract text.",
+      },
+    },
+    "protect-pdf": {
+      title: "Password-protect PDF",
+      description: "Encrypt the document with an opening password.",
+      hint: "The password is applied locally — we never store it.",
+      action: "Download encrypted PDF",
+      errors: {
+        invalid: "Choose a PDF file.",
+        failed: "Could not encrypt the PDF.",
+      },
+    },
+    "unlock-pdf": {
+      title: "Unlock PDF",
+      description: "Remove a password or editing and printing restrictions.",
+      hint: "Enter the current password if the file is protected.",
+      action: "Download unlocked PDF",
+      errors: {
+        invalid: "Choose a PDF file.",
+        failed: "Could not unlock the PDF. Check the password.",
+      },
+    },
+    "batch-sign": {
+      title: "Batch signing",
+      description: "One signature across multiple PDFs, exported as ZIP.",
+      hint: "Add files, place the signature on the preview, then export the pack.",
+      action: "Apply to all",
+      errors: {
+        invalid: "Add at least one valid PDF.",
+        failed: "Could not sign the batch.",
       },
     },
   },
@@ -198,6 +261,34 @@ export const en: Dictionary = {
     downloadTxt: "Download .txt",
     pagesExtracted: (count) => `Pages processed: ${count}`,
   },
+  dateStamp: {
+    formatLabel: "Stamp format",
+    formatDate: "Date",
+    formatTime: "Time",
+    formatDateTime: "Date & time",
+    previewLabel: "Preview",
+    placeHint: "Click the page to place the date or time stamp.",
+    size: "Size",
+    color: "Color",
+  },
+  protect: {
+    passwordLabel: "PDF open password",
+    passwordConfirm: "Confirm password",
+    mismatch: "Passwords do not match.",
+    minLength: "Use at least 4 characters.",
+  },
+  unlock: {
+    passwordLabel: "Current password (if any)",
+    passwordHint: "Leave empty if the PDF has no password",
+    wrongPassword: "Wrong password or corrupted file.",
+  },
+  batchSign: {
+    filesSelected: (count) => `Files selected: ${count}`,
+    clearList: "Clear list",
+    positionNote:
+      "Signature placement on the preview applies to page 1 of every PDF in the batch.",
+    zipAction: "Download ZIP of signed PDFs",
+  },
   botProtection: {
     rateLimited: "Please wait a few seconds before downloading another file.",
     unavailable:
@@ -205,7 +296,7 @@ export const en: Dictionary = {
   },
   rewardedAd: {
     sponsored: "Support the project",
-    title: "Download your document",
+    title: "Support the project with a short ad",
     message:
       "A short sponsor view is the only condition that keeps PureSign free, fully private, and without sign-ups or subscriptions.",
     watch: "Watch sponsor video to download",

@@ -7,10 +7,14 @@ export const DEFAULT_LOCALE = "uk" satisfies Locale;
 export const TOOL_IDS = [
   "sign",
   "stamp",
+  "date-stamp",
   "fill-form",
   "page-numbers",
   "redact",
   "extract-text",
+  "protect-pdf",
+  "unlock-pdf",
+  "batch-sign",
 ] as const;
 
 export type ToolId = (typeof TOOL_IDS)[number];

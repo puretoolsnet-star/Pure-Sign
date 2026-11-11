@@ -50,8 +50,30 @@ export const pl: Dictionary = {
     heroTitle: "Wszystkie narzędzia podpisu w jednej ciemnej przestrzeni roboczej.",
     heroSubtitle:
       "Podpisuj, pieczętuj, numeruj i wypełniaj dokumenty PDF prywatnie w przeglądarce.",
-    toolsAria: "Narzędzia podpisu PDF",
-    toolsHeading: "Narzędzia podpisu PDF",
+    toolsAria: "Katalog narzędzi PureSign",
+    toolsHeading: "Katalog narzędzi",
+    toolsCatalogHint:
+      "Zwijaj i rozwijaj kategorie strzałką — wszystko działa lokalnie w przeglądarce.",
+    expandCategory: "Rozwiń kategorię",
+    collapseCategory: "Zwiń kategorię",
+    toolCategories: {
+      signaturesStamps: {
+        title: "Podpisy i stemple",
+        subtitle: "Podpis, pieczęcie i znaczniki daty i czasu.",
+      },
+      formsLayout: {
+        title: "Formularze i układ",
+        subtitle: "Wypełnianie, numeracja, nagłówki i cenzura.",
+      },
+      analysisSecurity: {
+        title: "Analiza i bezpieczeństwo",
+        subtitle: "Tekst, szyfrowanie i odblokowanie.",
+      },
+      proBatch: {
+        title: "Pro / operacje masowe",
+        subtitle: "Podpis wsadowy z eksportem ZIP.",
+      },
+    },
     openTool: "Otwórz →",
   },
   footer: {
@@ -64,6 +86,7 @@ export const pl: Dictionary = {
     dropzoneTitle: "Upuść PDF tutaj lub kliknij, aby wybrać",
     dropzoneHint: "Plik jest przetwarzany tylko na tym urządzeniu.",
     downloadPdf: "Pobierz PDF",
+    dropzoneMultipleTitle: "Upuść jeden lub więcej plików PDF",
     processing: "Przetwarzanie…",
     clear: "Wyczyść",
     apply: "Zastosuj",
@@ -94,6 +117,16 @@ export const pl: Dictionary = {
       errors: {
         invalid: "Wybierz plik PDF.",
         failed: "Nie udało się nałożyć stempla.",
+      },
+    },
+    "date-stamp": {
+      title: "Stempel daty / czasu",
+      description: "Automatyczna data, godzina lub oba na stronie PDF.",
+      hint: "Wybierz format i kliknij stronę, aby umieścić znacznik.",
+      action: "Pobierz PDF ze znacznikiem",
+      errors: {
+        invalid: "Wybierz plik PDF.",
+        failed: "Nie udało się nałożyć znacznika daty.",
       },
     },
     "fill-form": {
@@ -134,6 +167,36 @@ export const pl: Dictionary = {
       errors: {
         invalid: "Wybierz plik PDF.",
         failed: "Nie udało się wyodrębnić tekstu.",
+      },
+    },
+    "protect-pdf": {
+      title: "Hasło i szyfrowanie PDF",
+      description: "Ustaw hasło otwarcia dokumentu przed wysyłką.",
+      hint: "Hasło jest stosowane lokalnie — nie przechowujemy go.",
+      action: "Pobierz zaszyfrowany PDF",
+      errors: {
+        invalid: "Wybierz plik PDF.",
+        failed: "Nie udało się zaszyfrować PDF.",
+      },
+    },
+    "unlock-pdf": {
+      title: "Odblokowanie PDF",
+      description: "Usuń hasło lub ograniczenia druku i kopiowania.",
+      hint: "Wpisz bieżące hasło, jeśli plik jest chroniony.",
+      action: "Pobierz odblokowany PDF",
+      errors: {
+        invalid: "Wybierz plik PDF.",
+        failed: "Nie udało się odblokować PDF. Sprawdź hasło.",
+      },
+    },
+    "batch-sign": {
+      title: "Podpis wsadowy",
+      description: "Jeden podpis dla wielu PDF z eksportem ZIP.",
+      hint: "Dodaj pliki, umieść podpis na podglądzie i eksportuj paczkę.",
+      action: "Zastosuj do wszystkich",
+      errors: {
+        invalid: "Dodaj co najmniej jeden poprawny PDF.",
+        failed: "Nie udało się podpisać paczki.",
       },
     },
   },
@@ -197,6 +260,34 @@ export const pl: Dictionary = {
     empty: "W tym dokumencie nie znaleziono warstwy tekstowej.",
     downloadTxt: "Pobierz .txt",
     pagesExtracted: (count) => `Przetworzono stron: ${count}`,
+  },
+  dateStamp: {
+    formatLabel: "Format znacznika",
+    formatDate: "Data",
+    formatTime: "Godzina",
+    formatDateTime: "Data i godzina",
+    previewLabel: "Podgląd",
+    placeHint: "Kliknij stronę, aby umieścić znacznik daty lub czasu.",
+    size: "Rozmiar",
+    color: "Kolor",
+  },
+  protect: {
+    passwordLabel: "Hasło otwarcia PDF",
+    passwordConfirm: "Potwierdź hasło",
+    mismatch: "Hasła się nie zgadzają.",
+    minLength: "Hasło musi mieć co najmniej 4 znaki.",
+  },
+  unlock: {
+    passwordLabel: "Bieżące hasło (jeśli jest)",
+    passwordHint: "Zostaw puste, jeśli PDF nie ma hasła",
+    wrongPassword: "Nieprawidłowe hasło lub uszkodzony plik.",
+  },
+  batchSign: {
+    filesSelected: (count) => `Wybrano plików: ${count}`,
+    clearList: "Wyczyść listę",
+    positionNote:
+      "Pozycja na podglądzie dotyczy pierwszej strony każdego PDF w paczce.",
+    zipAction: "Pobierz ZIP z podpisanymi PDF",
   },
   botProtection: {
     rateLimited:

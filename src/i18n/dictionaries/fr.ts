@@ -50,8 +50,30 @@ export const fr: Dictionary = {
     heroTitle: "Tous les outils de signature dans un espace de travail sombre.",
     heroSubtitle:
       "Signez, tamponnez, numérotez et remplissez des PDF en privé dans votre navigateur.",
-    toolsAria: "Outils de signature PDF",
-    toolsHeading: "Outils de signature PDF",
+    toolsAria: "Catalogue d’outils PureSign",
+    toolsHeading: "Catalogue d’outils",
+    toolsCatalogHint:
+      "Réduisez ou développez les catégories avec la flèche — tout s’exécute localement dans le navigateur.",
+    expandCategory: "Développer la catégorie",
+    collapseCategory: "Réduire la catégorie",
+    toolCategories: {
+      signaturesStamps: {
+        title: "Signatures et tampons",
+        subtitle: "Signer, tamponner, date et heure sur le PDF.",
+      },
+      formsLayout: {
+        title: "Formulaires et mise en page",
+        subtitle: "Remplissage, numérotation, en-têtes et censure.",
+      },
+      analysisSecurity: {
+        title: "Analyse et sécurité",
+        subtitle: "Texte, chiffrement et déverrouillage.",
+      },
+      proBatch: {
+        title: "Pro / lot",
+        subtitle: "Signature par lot avec export ZIP.",
+      },
+    },
     openTool: "Ouvrir →",
   },
   footer: {
@@ -64,6 +86,7 @@ export const fr: Dictionary = {
     dropzoneTitle: "Déposez un PDF ici ou cliquez pour parcourir",
     dropzoneHint: "Le fichier est traité uniquement sur cet appareil.",
     downloadPdf: "Télécharger le PDF",
+    dropzoneMultipleTitle: "Déposez un ou plusieurs PDF ici",
     processing: "Traitement…",
     clear: "Effacer",
     apply: "Appliquer",
@@ -94,6 +117,16 @@ export const fr: Dictionary = {
       errors: {
         invalid: "Choisissez un fichier PDF.",
         failed: "Impossible d’appliquer le tampon.",
+      },
+    },
+    "date-stamp": {
+      title: "Tampon date / heure",
+      description: "Date, heure ou les deux sur le PDF en un clic.",
+      hint: "Choisissez le format et cliquez sur la page.",
+      action: "Télécharger le PDF horodaté",
+      errors: {
+        invalid: "Choisissez un fichier PDF.",
+        failed: "Impossible d’appliquer l’horodatage.",
       },
     },
     "fill-form": {
@@ -134,6 +167,36 @@ export const fr: Dictionary = {
       errors: {
         invalid: "Choisissez un fichier PDF.",
         failed: "Impossible d’extraire le texte.",
+      },
+    },
+    "protect-pdf": {
+      title: "Mot de passe et chiffrement PDF",
+      description: "Définissez un mot de passe d’ouverture du document.",
+      hint: "Le mot de passe est appliqué localement — nous ne le stockons pas.",
+      action: "Télécharger le PDF chiffré",
+      errors: {
+        invalid: "Choisissez un fichier PDF.",
+        failed: "Impossible de chiffrer le PDF.",
+      },
+    },
+    "unlock-pdf": {
+      title: "Déverrouiller le PDF",
+      description: "Supprimez le mot de passe ou les restrictions d’impression.",
+      hint: "Saisissez le mot de passe actuel si le fichier est protégé.",
+      action: "Télécharger le PDF déverrouillé",
+      errors: {
+        invalid: "Choisissez un fichier PDF.",
+        failed: "Impossible de déverrouiller le PDF. Vérifiez le mot de passe.",
+      },
+    },
+    "batch-sign": {
+      title: "Signature par lot",
+      description: "Une signature pour plusieurs PDF, export en ZIP.",
+      hint: "Ajoutez des fichiers, placez la signature sur l’aperçu, exportez.",
+      action: "Appliquer à tous",
+      errors: {
+        invalid: "Ajoutez au moins un PDF valide.",
+        failed: "Impossible de signer le lot.",
       },
     },
   },
@@ -197,6 +260,34 @@ export const fr: Dictionary = {
     empty: "Aucune couche de texte n’a été trouvée dans ce document.",
     downloadTxt: "Télécharger .txt",
     pagesExtracted: (count) => `Pages traitées : ${count}`,
+  },
+  dateStamp: {
+    formatLabel: "Format du tampon",
+    formatDate: "Date",
+    formatTime: "Heure",
+    formatDateTime: "Date et heure",
+    previewLabel: "Aperçu",
+    placeHint: "Cliquez sur la page pour placer le tampon date/heure.",
+    size: "Taille",
+    color: "Couleur",
+  },
+  protect: {
+    passwordLabel: "Mot de passe d’ouverture",
+    passwordConfirm: "Confirmer le mot de passe",
+    mismatch: "Les mots de passe ne correspondent pas.",
+    minLength: "Utilisez au moins 4 caractères.",
+  },
+  unlock: {
+    passwordLabel: "Mot de passe actuel (le cas échéant)",
+    passwordHint: "Laissez vide si le PDF n’a pas de mot de passe",
+    wrongPassword: "Mot de passe incorrect ou fichier corrompu.",
+  },
+  batchSign: {
+    filesSelected: (count) => `Fichiers sélectionnés : ${count}`,
+    clearList: "Vider la liste",
+    positionNote:
+      "La position sur l’aperçu s’applique à la page 1 de chaque PDF du lot.",
+    zipAction: "Télécharger le ZIP des PDF signés",
   },
   botProtection: {
     rateLimited:
