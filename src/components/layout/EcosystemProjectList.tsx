@@ -4,9 +4,9 @@ import { PenTool, QrCode, Sparkles, Table2 } from "lucide-react";
 import Link from "next/link";
 
 import { useI18n } from "@/i18n/context";
-import { useLocalizedPath } from "@/lib/i18n/use-localized-path";
 import {
   ECOSYSTEM_PROJECTS,
+  ecosystemHref,
   type EcosystemProjectId,
 } from "@/lib/ecosystem";
 import { cn } from "@/lib/cn";
@@ -27,8 +27,7 @@ export function EcosystemProjectList({
   onNavigate,
   className,
 }: EcosystemProjectListProps) {
-  const { t } = useI18n();
-  const toHref = useLocalizedPath();
+  const { t, locale } = useI18n();
 
   return (
     <ul
@@ -40,6 +39,7 @@ export function EcosystemProjectList({
       {ECOSYSTEM_PROJECTS.map((project) => {
         const copy = t.ecosystem.items[project.id];
         const Icon = PROJECT_ICONS[project.id];
+        const href = ecosystemHref(project, locale);
         const isActive = project.status === "active";
         const isCurrent = Boolean(project.current);
 
@@ -88,11 +88,11 @@ export function EcosystemProjectList({
 
         return (
           <li key={project.id} role="none" className="min-w-0">
-            {isActive && project.href ? (
+            {isActive && href ? (
               project.external ? (
                 <a
                   role="menuitem"
-                  href={toHref(project.href)}
+                  href={href}
                   aria-label={`${copy.name}. ${copy.tagline}`}
                   className={cardClass}
                   onClick={onNavigate}
@@ -103,7 +103,7 @@ export function EcosystemProjectList({
               ) : (
                 <Link
                   role="menuitem"
-                  href={toHref(project.href)}
+                  href={href}
                   aria-label={`${copy.name}. ${copy.tagline}`}
                   aria-current={isCurrent ? "page" : undefined}
                   className={cardClass}

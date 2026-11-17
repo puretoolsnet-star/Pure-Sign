@@ -14,7 +14,7 @@ export function getSiteUrl(): string {
   const vercel = process.env.VERCEL_URL?.trim();
   if (vercel) return `https://${vercel.replace(/\/$/, "")}`;
 
-  return "https://puresign.app";
+  return CANONICAL_SITE_URL;
 }
 
 export function absoluteUrl(path: string): string {
