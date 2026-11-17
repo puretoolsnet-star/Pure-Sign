@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { ToolWorkspaceLayout } from "@/components/layout/ToolWorkspaceLayout";
 import { useI18n } from "@/i18n/context";
 import type { ToolId } from "@/i18n/locales";
 import { useLocalizedPath } from "@/lib/i18n/use-localized-path";
@@ -28,12 +29,7 @@ export function ToolShell({ toolId, icon: Icon, children, className }: ToolShell
     <div className="puresign-page-shell relative flex min-h-dvh w-full max-w-full flex-1 flex-col bg-background font-sans text-gray-100">
       <SiteHeader maxWidth="4xl" />
 
-      <main
-        className={cn(
-          "relative z-10 mx-auto w-full min-w-0 max-w-4xl flex-1 px-4 pb-[max(4rem,env(safe-area-inset-bottom))] pt-0 sm:px-6 sm:pb-16 md:px-8",
-          className,
-        )}
-      >
+      <div className="relative z-10 mx-auto w-full min-w-0 max-w-4xl px-4 sm:px-6 md:px-8">
         <Link
           href={href("/")}
           aria-label={t.common.backToTools}
@@ -64,8 +60,15 @@ export function ToolShell({ toolId, icon: Icon, children, className }: ToolShell
             </p>
           </div>
         </div>
+      </div>
 
-        <div className="pt-6 sm:pt-8">{children}</div>
+      <main
+        className={cn(
+          "relative z-10 mx-auto w-full min-w-0 max-w-4xl flex-1 px-4 pb-[max(4rem,env(safe-area-inset-bottom))] pt-6 sm:px-6 sm:pb-16 sm:pt-8 md:px-8",
+          className,
+        )}
+      >
+        <ToolWorkspaceLayout adSlot="tool-sidebar">{children}</ToolWorkspaceLayout>
       </main>
 
       <SiteFooter />

@@ -170,6 +170,11 @@ export type Dictionary = {
     rateLimited: string;
     unavailable: string;
   };
+  toolAd: {
+    sponsored: string;
+    slotTitle: string;
+    slotHint: string;
+  };
   rewardedAd: {
     sponsored: string;
     title: string;

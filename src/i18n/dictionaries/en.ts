@@ -294,6 +294,11 @@ export const en: Dictionary = {
     unavailable:
       "Background browser verification did not complete. Refresh the page and try again.",
   },
+  toolAd: {
+    sponsored: "Sponsored",
+    slotTitle: "Ad space",
+    slotHint: "Partner placements here help keep the service free.",
+  },
   rewardedAd: {
     sponsored: "Support the project",
     title: "Support the project with a short ad",

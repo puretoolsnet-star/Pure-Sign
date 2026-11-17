@@ -295,6 +295,11 @@ export const es: Dictionary = {
     unavailable:
       "La verificación del navegador no se completó. Actualiza la página e inténtalo de nuevo.",
   },
+  toolAd: {
+    sponsored: "Patrocinado",
+    slotTitle: "Espacio publicitario",
+    slotHint: "Los anuncios de socios ayudan a mantener el servicio gratuito.",
+  },
   rewardedAd: {
     sponsored: "Apoya el proyecto",
     title: "Descargar el documento listo",

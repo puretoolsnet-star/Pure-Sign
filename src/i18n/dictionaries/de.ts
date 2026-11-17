@@ -295,6 +295,11 @@ export const de: Dictionary = {
     unavailable:
       "Die Hintergrundprüfung des Browsers ist fehlgeschlagen. Seite neu laden und erneut versuchen.",
   },
+  toolAd: {
+    sponsored: "Anzeige",
+    slotTitle: "Werbefläche",
+    slotHint: "Partneranzeigen helfen, den Dienst kostenlos zu halten.",
+  },
   rewardedAd: {
     sponsored: "Projekt unterstützen",
     title: "Fertiges Dokument herunterladen",

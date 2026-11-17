@@ -295,6 +295,11 @@ export const pl: Dictionary = {
     unavailable:
       "Weryfikacja przeglądarki nie powiodła się. Odśwież stronę i spróbuj ponownie.",
   },
+  toolAd: {
+    sponsored: "Sponsorowane",
+    slotTitle: "Miejsce na reklamę",
+    slotHint: "Reklamy partnerów pomagają utrzymać usługę bezpłatną.",
+  },
   rewardedAd: {
     sponsored: "Wesprzyj projekt",
     title: "Pobierz gotowy dokument",

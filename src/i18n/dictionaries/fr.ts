@@ -295,6 +295,11 @@ export const fr: Dictionary = {
     unavailable:
       "La vérification du navigateur a échoué. Actualisez la page et réessayez.",
   },
+  toolAd: {
+    sponsored: "Sponsorisé",
+    slotTitle: "Espace publicitaire",
+    slotHint: "Les annonces partenaires aident à garder le service gratuit.",
+  },
   rewardedAd: {
     sponsored: "Soutenir le projet",
     title: "Télécharger le document prêt",
