@@ -1,4 +1,5 @@
 import { DEFAULT_LOCALE, LOCALES, type Locale } from "@/i18n/locales";
+import type { SeoPageId } from "@/i18n/seo/copy";
 import { localizedPath } from "@/lib/i18n/routing";
 
 export { DEFAULT_LOCALE, LOCALES };
@@ -18,7 +19,14 @@ export function absoluteUrl(path: string): string {
   return `${getSiteUrl()}${normalized}`;
 }
 
-/** ISO 639-1 codes matching URL prefixes — Google hreflang primary keys. */
+export function seoPath(page: SeoPageId): string {
+  return page === "home" ? "/" : `/tools/${page}`;
+}
+
+/**
+ * ISO 639-1 hreflang keys matching URL prefixes (`/uk`, `/en`, …).
+ * Language-only codes are the right signal when pages are not region-specific.
+ */
 export const HREFLANG_MAP: Record<Locale, string> = {
   uk: "uk",
   en: "en",
@@ -28,7 +36,7 @@ export const HREFLANG_MAP: Record<Locale, string> = {
   pl: "pl",
 };
 
-/** Optional regional variants pointing at the same localized URL. */
+/** BCP 47 tags for JSON-LD `inLanguage` (not used as duplicate hreflang). */
 export const HREFLANG_REGIONAL: Record<Locale, string> = {
   uk: "uk-UA",
   en: "en-US",
@@ -47,15 +55,21 @@ export const OPEN_GRAPH_LOCALE: Record<Locale, string> = {
   pl: "pl_PL",
 };
 
+/**
+ * Absolute hreflang map for `<link rel="alternate">` and sitemap xhtml links.
+ * Includes every locale (self + peers) plus `x-default` → default locale.
+ */
 export function buildLanguageAlternates(path: string): Record<string, string> {
   const languages: Record<string, string> = {};
 
   for (const locale of LOCALES) {
-    const url = absoluteUrl(localizedPath(locale, path));
-    languages[HREFLANG_MAP[locale]] = url;
-    languages[HREFLANG_REGIONAL[locale]] = url;
+    languages[HREFLANG_MAP[locale]] = absoluteUrl(localizedPath(locale, path));
   }
 
   languages["x-default"] = absoluteUrl(localizedPath(DEFAULT_LOCALE, path));
   return languages;
+}
+
+export function buildSitemapLanguageAlternates(path: string): Record<string, string> {
+  return buildLanguageAlternates(path);
 }

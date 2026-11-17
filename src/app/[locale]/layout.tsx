@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { LocaleShell } from "@/components/i18n/LocaleShell";
 import { DocumentLang } from "@/components/seo/DocumentLang";
 import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
+import { OPEN_GRAPH_LOCALE } from "@/lib/seo/site";
 
 type LocaleLayoutProps = LayoutProps<"/[locale]">;
 
@@ -18,6 +19,10 @@ export async function generateMetadata({
   if (!isLocale(raw)) return {};
 
   return {
+    openGraph: {
+      locale: OPEN_GRAPH_LOCALE[raw],
+      siteName: "PureSign",
+    },
     other: {
       "content-language": raw,
     },

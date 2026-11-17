@@ -2,15 +2,7 @@ import { dictionaries, TOOL_IDS, type Locale, type ToolId } from "@/i18n/locales
 import { getSeoCopy } from "@/i18n/seo/copy";
 import { homeRoute, toolRoute } from "@/lib/i18n/routing";
 import { buildOgImageUrl } from "@/lib/seo/og";
-import {
-  absoluteUrl,
-  buildLanguageAlternates,
-  HREFLANG_REGIONAL,
-} from "@/lib/seo/site";
-
-export function buildSitemapLanguageAlternates(path: string) {
-  return buildLanguageAlternates(path);
-}
+import { absoluteUrl, HREFLANG_REGIONAL } from "@/lib/seo/site";
 
 export function buildHomeStructuredData(locale: Locale) {
   const copy = getSeoCopy("home", locale);

@@ -10,18 +10,15 @@ import {
   buildLanguageAlternates,
   getSiteUrl,
   OPEN_GRAPH_LOCALE,
+  seoPath,
 } from "@/lib/seo/site";
-
-function pathForPage(page: SeoPageId): string {
-  if (page === "home") return "/";
-  return `/tools/${page}`;
-}
 
 export function buildPageMetadata(page: SeoPageId, locale: Locale): Metadata {
   const copy = getSeoCopy(page, locale);
-  const path = pathForPage(page);
+  const path = seoPath(page);
   const canonical = absoluteUrl(localizedPath(locale, path));
   const ogImage = absoluteUrl(buildOgImageUrl(locale, page));
+  const languages = buildLanguageAlternates(path);
 
   return {
     title: copy.title,
@@ -33,7 +30,7 @@ export function buildPageMetadata(page: SeoPageId, locale: Locale): Metadata {
     category: "utilities",
     alternates: {
       canonical,
-      languages: buildLanguageAlternates(path),
+      languages,
     },
     openGraph: {
       type: "website",
