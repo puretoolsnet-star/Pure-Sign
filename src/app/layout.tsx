@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
 
 import { Providers } from "@/app/providers";
 import { siteMetadataBase } from "@/lib/seo/metadata";
@@ -37,11 +36,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           id="puresign-portal-root"
           aria-hidden
           className="pointer-events-none fixed inset-0 z-[100] [&>*]:pointer-events-auto"
-        />
-        <Script
-          src="https://bauval.org/14/0406ef292aee4ef6866e7a26dd01a13f"
-          strategy="afterInteractive"
-          data-cfasync="false"
         />
       </body>
     </html>

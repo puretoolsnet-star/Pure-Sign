@@ -33,29 +33,6 @@ body {
   pointer-events: auto;
 }
 
-/* Desktop: keep Adsterra Social Bar / push widgets below the site header */
-@media (min-width: 768px) {
-  body > iframe[src*="bauval.org"],
-  body > iframe[src*="adsterra"],
-  body > iframe[src*="highperformanceformat"],
-  body > iframe[src*="effectivecreativeformats"],
-  body > div:not(#puresign-portal-root):has(> iframe[src*="bauval.org"]),
-  body > div:not(#puresign-portal-root):has(> iframe[src*="highperformanceformat"]),
-  body > div:not(#puresign-portal-root)[style*="position:fixed"],
-  body > div:not(#puresign-portal-root)[style*="position: fixed"] {
-    top: 80px !important;
-    bottom: auto !important;
-    z-index: 2147483640 !important;
-  }
-
-  body > iframe[style*="position:fixed"],
-  body > iframe[style*="position: fixed"] {
-    top: 80px !important;
-    bottom: auto !important;
-    z-index: 2147483640 !important;
-  }
-}
-
 img,
 svg,
 video {

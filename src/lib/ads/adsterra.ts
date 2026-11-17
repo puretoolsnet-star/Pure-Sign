@@ -1,6 +1,5 @@
 const NATIVE_SRC = process.env.NEXT_PUBLIC_ADSTERRA_NATIVE_SRC?.trim() ?? "";
 const NATIVE_ID = process.env.NEXT_PUBLIC_ADSTERRA_NATIVE_ID?.trim() ?? "";
-const SOCIAL_SRC = process.env.NEXT_PUBLIC_ADSTERRA_SOCIAL_SRC?.trim() ?? "";
 const POPUNDER_SRC = process.env.NEXT_PUBLIC_ADSTERRA_POPUNDER_SRC?.trim() ?? "";
 
 export const ADSTERRA_BANNER = {
@@ -74,13 +73,12 @@ export function mountAdsterraBanner(
   };
 }
 
-/** Fires Adsterra Social Bar / Popunder on the user gesture (mandatory interaction). */
+/** Fires the rewarded popunder on the user gesture (mandatory interaction). */
 export function triggerAdsterraReward() {
   if (typeof window === "undefined") return;
 
-  const popunder = POPUNDER_SRC || SOCIAL_SRC;
-  if (popunder) {
-    ensureScript(popunder, "adsterra-reward-trigger");
+  if (POPUNDER_SRC) {
+    ensureScript(POPUNDER_SRC, "adsterra-reward-trigger");
   }
 
   const invoke = (
