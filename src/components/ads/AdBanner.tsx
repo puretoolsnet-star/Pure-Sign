@@ -1,6 +1,12 @@
 "use client";
 
+import { useEffect, useId, useRef } from "react";
+
 import { useI18n } from "@/i18n/context";
+import {
+  ADSTERRA_BANNER,
+  mountAdsterraBanner,
+} from "@/lib/ads/adsterra";
 import { cn } from "@/lib/cn";
 
 export type AdBannerLayout = "sidebar" | "inline";
@@ -13,6 +19,16 @@ type AdBannerProps = {
   slot?: string;
 };
 
+function applyBannerScale(
+  viewport: HTMLDivElement,
+  host: HTMLDivElement,
+): void {
+  const w = viewport.clientWidth;
+  const scale = Math.min(1, w / ADSTERRA_BANNER.width);
+  viewport.style.height = `${ADSTERRA_BANNER.height * scale}px`;
+  host.style.transform = `translateX(-50%) scale(${scale})`;
+}
+
 export function AdBanner({
   className,
   layout = "sidebar",
@@ -20,6 +36,28 @@ export function AdBanner({
 }: AdBannerProps) {
   const { t } = useI18n();
   const isSidebar = layout === "sidebar";
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const hostRef = useRef<HTMLDivElement>(null);
+  const instanceId = useId().replace(/:/g, "");
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+    return mountAdsterraBanner(host, `${instanceId}-${slot}`);
+  }, [instanceId, slot]);
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    const host = hostRef.current;
+    if (!viewport || !host) return;
+
+    const sync = () => applyBannerScale(viewport, host);
+    sync();
+
+    const ro = new ResizeObserver(sync);
+    ro.observe(viewport);
+    return () => ro.disconnect();
+  }, []);
 
   return (
     <aside
@@ -42,14 +80,26 @@ export function AdBanner({
       </p>
       <div
         className={cn(
-          "glass-card flex w-full max-w-full flex-col items-center justify-center rounded-xl border border-dashed border-white/15 bg-surface/30 px-4 py-5 text-center",
-          isSidebar
-            ? "min-h-[6.5rem] sm:min-h-[7.5rem] lg:min-h-[8rem]"
-            : "min-h-[5.5rem]",
+          "glass-card w-full max-w-full rounded-xl border border-white/10 bg-surface/30 px-3 py-3",
+          isSidebar ? "lg:px-2.5" : "px-4 py-4",
         )}
       >
-        <p className="text-sm font-medium text-gray-300">{t.toolAd.slotTitle}</p>
-        <p className="mt-2 max-w-xs text-xs leading-relaxed text-gray-500">
+        <div className="mx-auto w-full min-w-0 max-w-[300px]">
+          <div
+            ref={viewportRef}
+            className="relative w-full overflow-hidden rounded-lg bg-black/15"
+          >
+            <div
+              ref={hostRef}
+              className="absolute left-1/2 top-0 origin-top"
+              style={{
+                width: ADSTERRA_BANNER.width,
+                height: ADSTERRA_BANNER.height,
+              }}
+            />
+          </div>
+        </div>
+        <p className="mt-3 text-center text-[11px] leading-relaxed text-gray-500 lg:text-left">
           {t.toolAd.slotHint}
         </p>
       </div>
