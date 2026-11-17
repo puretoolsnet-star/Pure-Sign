@@ -26,14 +26,14 @@ export function LanguageSwitcher() {
   const current = LOCALE_LABELS[locale];
 
   return (
-    <div ref={rootRef} className="relative z-30 shrink-0">
+    <div ref={rootRef} className="relative shrink-0">
       <button
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t.nav.selectLanguage}
         onClick={() => setOpen((value) => !value)}
-        className="glass-card inline-flex items-center gap-1.5 rounded-xl border-slate-800/60 px-2 py-1.5 text-xs text-gray-200 transition-colors hover:border-slate-700 hover:bg-surface-hover/60 sm:gap-2 sm:px-3 sm:py-2 sm:text-sm"
+        className="glass-card pointer-events-auto inline-flex items-center gap-1.5 rounded-xl border-slate-800/60 px-2 py-1.5 text-xs text-gray-200 transition-colors hover:border-slate-700 hover:bg-surface-hover/60 sm:gap-2 sm:px-3 sm:py-2 sm:text-sm"
       >
         <span className="hidden sm:inline" aria-hidden>
           {current.flag}
@@ -53,7 +53,7 @@ export function LanguageSwitcher() {
         <ul
           role="listbox"
           aria-label={t.nav.selectLanguage}
-          className="glass-card absolute right-0 z-[120] mt-2 w-[min(92vw,16rem)] max-w-[calc(100vw-1rem)] overflow-hidden rounded-xl border border-slate-800/60 py-1 shadow-xl shadow-black/40"
+          className="glass-card pointer-events-auto absolute right-0 z-[2147483647] mt-2 w-[min(92vw,16rem)] max-w-[calc(100vw-1rem)] overflow-hidden rounded-xl border border-slate-800/60 py-1 shadow-xl shadow-black/40"
         >
           {LOCALES.map((item) => {
             const meta = LOCALE_LABELS[item];

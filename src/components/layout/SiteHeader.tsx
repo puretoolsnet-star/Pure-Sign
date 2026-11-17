@@ -21,7 +21,7 @@ export function SiteHeader({ className, maxWidth = "6xl" }: SiteHeaderProps) {
   return (
     <header
       className={cn(
-        "relative z-20 mx-auto w-full min-w-0 shrink-0 px-4 py-3 sm:px-6 sm:py-5 md:px-8 md:py-6",
+        "puresign-site-header mx-auto w-full min-w-0 shrink-0 px-4 py-3 sm:px-6 sm:py-5 md:px-8 md:py-6",
         maxWidth === "6xl" ? "max-w-6xl" : "max-w-4xl",
         className,
       )}
@@ -52,7 +52,7 @@ export function SiteHeader({ className, maxWidth = "6xl" }: SiteHeaderProps) {
           </span>
         </Link>
 
-        <div className="relative z-30 flex shrink-0 items-center justify-end gap-1.5 sm:gap-2">
+        <div className="puresign-header-actions flex shrink-0 items-center justify-end gap-1.5 sm:gap-2">
           <EcosystemMenu />
           <LanguageSwitcher />
         </div>

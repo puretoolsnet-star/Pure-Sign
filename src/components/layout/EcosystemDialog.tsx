@@ -111,7 +111,7 @@ export function EcosystemDialog({
       role="dialog"
       aria-modal="true"
       aria-label={t.ecosystem.menuAria}
-      className="glass-card pointer-events-auto absolute right-0 top-full z-[40] mt-2 flex w-[min(92vw,32rem)] max-w-md flex-col overflow-hidden rounded-2xl border border-slate-800/60 shadow-xl shadow-black/40"
+      className="glass-card pointer-events-auto absolute right-0 top-full z-[2147483647] mt-2 flex w-[min(92vw,32rem)] max-w-md flex-col overflow-hidden rounded-2xl border border-slate-800/60 shadow-xl shadow-black/40"
       style={{ maxHeight: "min(82vh, 40rem)" }}
     >
       {header}

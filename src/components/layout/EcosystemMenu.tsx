@@ -46,7 +46,7 @@ export function EcosystemMenu() {
         aria-expanded={open}
         aria-label={t.ecosystem.menuAria}
         onClick={() => setOpen((value) => !value)}
-        className="glass-card relative z-10 inline-flex max-w-[44vw] items-center gap-1.5 rounded-xl border-slate-800/60 px-2 py-1.5 text-xs text-gray-200 transition-colors hover:border-slate-700 hover:bg-surface-hover/60 sm:max-w-none sm:gap-2 sm:px-3 sm:py-2 sm:text-sm"
+        className="glass-card pointer-events-auto relative z-10 inline-flex max-w-[44vw] items-center gap-1.5 rounded-xl border-slate-800/60 px-2 py-1.5 text-xs text-gray-200 transition-colors hover:border-slate-700 hover:bg-surface-hover/60 sm:max-w-none sm:gap-2 sm:px-3 sm:py-2 sm:text-sm"
       >
         <Sparkles className="h-3.5 w-3.5 shrink-0 text-primary sm:h-4 sm:w-4" aria-hidden />
         <span className="hidden font-medium sm:inline">{t.ecosystem.menuLabel}</span>
