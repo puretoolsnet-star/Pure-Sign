@@ -5,8 +5,8 @@ import type { SeoPageId } from "@/i18n/seo/copy";
 import { localizedPath } from "@/lib/i18n/routing";
 import { buildOgImageUrl } from "@/lib/seo/og";
 import {
-  absoluteUrl,
   buildSitemapLanguageAlternates,
+  canonicalAbsoluteUrl,
   seoPath,
 } from "@/lib/seo/site";
 
@@ -37,14 +37,14 @@ function entry(
 ) {
   const path = seoPath(page);
   return {
-    url: absoluteUrl(localizedPath(locale, path)),
+    url: canonicalAbsoluteUrl(localizedPath(locale, path)),
     lastModified: LAST_MODIFIED,
     changeFrequency,
     priority,
     alternates: {
       languages: buildSitemapLanguageAlternates(path),
     },
-    images: [absoluteUrl(buildOgImageUrl(locale, page))],
+    images: [canonicalAbsoluteUrl(buildOgImageUrl(locale, page))],
   } satisfies MetadataRoute.Sitemap[number];
 }
 

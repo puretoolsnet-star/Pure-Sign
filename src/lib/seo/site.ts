@@ -4,6 +4,9 @@ import { localizedPath } from "@/lib/i18n/routing";
 
 export { DEFAULT_LOCALE, LOCALES };
 
+/** Permanent public origin for sitemap, robots, and indexation URLs. */
+export const CANONICAL_SITE_URL = "https://sign.kixt.net";
+
 export function getSiteUrl(): string {
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (fromEnv) return fromEnv.replace(/\/$/, "");
@@ -17,6 +20,11 @@ export function getSiteUrl(): string {
 export function absoluteUrl(path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
   return `${getSiteUrl()}${normalized}`;
+}
+
+export function canonicalAbsoluteUrl(path: string): string {
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${CANONICAL_SITE_URL}${normalized}`;
 }
 
 export function seoPath(page: SeoPageId): string {
@@ -71,5 +79,16 @@ export function buildLanguageAlternates(path: string): Record<string, string> {
 }
 
 export function buildSitemapLanguageAlternates(path: string): Record<string, string> {
-  return buildLanguageAlternates(path);
+  const languages: Record<string, string> = {};
+
+  for (const locale of LOCALES) {
+    languages[HREFLANG_MAP[locale]] = canonicalAbsoluteUrl(
+      localizedPath(locale, path),
+    );
+  }
+
+  languages["x-default"] = canonicalAbsoluteUrl(
+    localizedPath(DEFAULT_LOCALE, path),
+  );
+  return languages;
 }
