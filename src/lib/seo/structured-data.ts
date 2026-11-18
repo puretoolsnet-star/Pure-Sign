@@ -1,20 +1,45 @@
 import { dictionaries, TOOL_IDS, type Locale, type ToolId } from "@/i18n/locales";
-import { getSeoCopy } from "@/i18n/seo/copy";
+import { getSeoPageContent } from "@/i18n/seo/content";
+import { getSeoCopy, type SeoPageId } from "@/i18n/seo/copy";
 import { homeRoute, toolRoute } from "@/lib/i18n/routing";
 import { buildOgImageUrl } from "@/lib/seo/og";
-import { absoluteUrl, HREFLANG_REGIONAL } from "@/lib/seo/site";
+import { canonicalAbsoluteUrl, HREFLANG_REGIONAL } from "@/lib/seo/site";
+
+function pageUrl(locale: Locale, page: SeoPageId) {
+  return page === "home"
+    ? canonicalAbsoluteUrl(homeRoute(locale))
+    : canonicalAbsoluteUrl(toolRoute(locale, page));
+}
+
+function buildFaqStructuredData(page: SeoPageId, locale: Locale) {
+  const content = getSeoPageContent(page, locale);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faq.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
 
 export function buildHomeStructuredData(locale: Locale) {
   const copy = getSeoCopy("home", locale);
   const t = dictionaries[locale];
-  const url = absoluteUrl(homeRoute(locale));
+  const url = pageUrl(locale, "home");
   const inLanguage = HREFLANG_REGIONAL[locale];
+  const homeUrl = pageUrl(locale, "home");
 
   const toolList = TOOL_IDS.map((toolId, index) => ({
     "@type": "ListItem",
     position: index + 1,
     name: t.tools[toolId].title,
-    url: absoluteUrl(toolRoute(locale, toolId)),
+    url: pageUrl(locale, toolId),
     description: t.tools[toolId].description,
   }));
 
@@ -29,7 +54,7 @@ export function buildHomeStructuredData(locale: Locale) {
       publisher: {
         "@type": "Organization",
         name: "PureSign",
-        url: absoluteUrl(homeRoute(locale)),
+        url: homeUrl,
       },
     },
     {
@@ -50,7 +75,7 @@ export function buildHomeStructuredData(locale: Locale) {
       inLanguage,
       isAccessibleForFree: true,
       featureList: TOOL_IDS.map((toolId) => t.tools[toolId].title),
-      screenshot: absoluteUrl(buildOgImageUrl(locale, "home")),
+      screenshot: canonicalAbsoluteUrl(buildOgImageUrl(locale, "home")),
     },
     {
       "@context": "https://schema.org",
@@ -59,6 +84,7 @@ export function buildHomeStructuredData(locale: Locale) {
       itemListElement: toolList,
       numberOfItems: toolList.length,
     },
+    buildFaqStructuredData("home", locale),
   ];
 }
 
@@ -66,7 +92,8 @@ export function buildToolStructuredData(toolId: ToolId, locale: Locale) {
   const t = dictionaries[locale];
   const tool = t.tools[toolId];
   const seo = getSeoCopy(toolId, locale);
-  const url = absoluteUrl(toolRoute(locale, toolId));
+  const url = pageUrl(locale, toolId);
+  const homeUrl = pageUrl(locale, "home");
   const inLanguage = HREFLANG_REGIONAL[locale];
 
   return [
@@ -87,11 +114,11 @@ export function buildToolStructuredData(toolId: ToolId, locale: Locale) {
       description: seo.description,
       inLanguage,
       isAccessibleForFree: true,
-      screenshot: absoluteUrl(buildOgImageUrl(locale, toolId)),
+      screenshot: canonicalAbsoluteUrl(buildOgImageUrl(locale, toolId)),
       provider: {
         "@type": "Organization",
         name: "PureSign",
-        url: absoluteUrl(homeRoute(locale)),
+        url: homeUrl,
       },
     },
     {
@@ -102,7 +129,7 @@ export function buildToolStructuredData(toolId: ToolId, locale: Locale) {
           "@type": "ListItem",
           position: 1,
           name: t.brand.name,
-          item: absoluteUrl(homeRoute(locale)),
+          item: homeUrl,
         },
         {
           "@type": "ListItem",
@@ -122,8 +149,9 @@ export function buildToolStructuredData(toolId: ToolId, locale: Locale) {
       isPartOf: {
         "@type": "WebSite",
         name: "PureSign",
-        url: absoluteUrl(homeRoute(locale)),
+        url: homeUrl,
       },
     },
+    buildFaqStructuredData(toolId, locale),
   ];
 }

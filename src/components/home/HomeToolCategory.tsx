@@ -28,6 +28,7 @@ export function HomeToolCategory({
 
   return (
     <section
+      id={`category-${categoryKey}`}
       className="w-full min-w-0 rounded-2xl border border-slate-800/70 bg-gray-950/40"
       aria-labelledby={headingId}
     >

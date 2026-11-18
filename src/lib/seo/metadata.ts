@@ -8,6 +8,7 @@ import { buildOgImageUrl } from "@/lib/seo/og";
 import {
   absoluteUrl,
   buildLanguageAlternates,
+  canonicalAbsoluteUrl,
   getSiteUrl,
   OPEN_GRAPH_LOCALE,
   seoPath,
@@ -16,7 +17,7 @@ import {
 export function buildPageMetadata(page: SeoPageId, locale: Locale): Metadata {
   const copy = getSeoCopy(page, locale);
   const path = seoPath(page);
-  const canonical = absoluteUrl(localizedPath(locale, path));
+  const canonical = canonicalAbsoluteUrl(localizedPath(locale, path));
   const ogImage = absoluteUrl(buildOgImageUrl(locale, page));
   const languages = buildLanguageAlternates(path);
 

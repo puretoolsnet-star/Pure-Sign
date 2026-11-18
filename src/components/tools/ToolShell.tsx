@@ -8,6 +8,7 @@ import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { ToolWorkspaceLayout } from "@/components/layout/ToolWorkspaceLayout";
+import { PageSeoSection } from "@/components/seo/PageSeoSection";
 import { useI18n } from "@/i18n/context";
 import type { ToolId } from "@/i18n/locales";
 import { useLocalizedPath } from "@/lib/i18n/use-localized-path";
@@ -69,6 +70,7 @@ export function ToolShell({ toolId, icon: Icon, children, className }: ToolShell
         )}
       >
         <ToolWorkspaceLayout adSlot="tool-sidebar">{children}</ToolWorkspaceLayout>
+        <PageSeoSection page={toolId} />
       </main>
 
       <SiteFooter />

@@ -5,6 +5,7 @@ import { Lock, ServerOff, ShieldCheck } from "lucide-react";
 import { HomeToolCategory } from "@/components/home/HomeToolCategory";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { PageSeoSection } from "@/components/seo/PageSeoSection";
 import { useI18n } from "@/i18n/context";
 import { HOME_TOOL_CATALOG } from "@/lib/tools/catalog";
 
@@ -60,6 +61,8 @@ export function HomePage() {
             ))}
           </div>
         </section>
+
+        <PageSeoSection page="home" />
       </main>
 
       <SiteFooter />

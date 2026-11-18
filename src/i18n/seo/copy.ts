@@ -1,6 +1,8 @@
-import type { Locale, ToolId } from "@/i18n/locales";
+import { TOOL_IDS, type Locale, type ToolId } from "@/i18n/locales";
 
 export type SeoPageId = "home" | ToolId;
+
+export const SEO_PAGE_IDS: readonly SeoPageId[] = ["home", ...TOOL_IDS];
 
 export type SeoCopy = {
   title: string;
@@ -13,9 +15,9 @@ type SeoCatalog = Record<SeoPageId, Record<Locale, SeoCopy>>;
 export const SEO_COPY: SeoCatalog = {
   home: {
     uk: {
-      title: "PureSign — підпис PDF онлайн безкоштовно у браузері",
+      title: "Підписати PDF онлайн безкоштовно | PureSign",
       description:
-        "Підпишіть PDF, поставте печатку, заповніть форму та пронумеруйте сторінки локально. Безкоштовно, без реєстрації і без завантаження на сервер.",
+        "Підписати PDF онлайн безкоштовно: електронний підпис, печатка, форми та нумерація локально в браузері. Без реєстрації і без завантаження документів на сервер.",
       keywords: [
         "підпис PDF онлайн",
         "підписати PDF безкоштовно",
@@ -28,9 +30,9 @@ export const SEO_COPY: SeoCatalog = {
       ],
     },
     en: {
-      title: "PureSign — sign PDF online free in your browser",
+      title: "Free Online PDF Signer and e-Signature | PureSign",
       description:
-        "Sign, stamp, fill, and number PDFs locally in your browser. Free private PDF tools with no signup and no server upload.",
+        "Free online PDF signer and e-signature tools. Draw or upload a signature, stamp, fill, and number PDFs locally in your browser — no signup, no server upload.",
       keywords: [
         "sign PDF online free",
         "electronic signature PDF",
@@ -43,9 +45,9 @@ export const SEO_COPY: SeoCatalog = {
       ],
     },
     de: {
-      title: "PureSign — PDF online kostenlos im Browser unterschreiben",
+      title: "PDF online kostenlos unterschreiben | PureSign",
       description:
-        "PDFs lokal unterschreiben, stempeln, ausfüllen und nummerieren. Kostenlose private Tools ohne Registrierung und ohne Server-Upload.",
+        "PDF online kostenlos unterschreiben: e-Signatur, Stempel, Formulare und Seitenzahlen lokal im Browser. Ohne Registrierung und ohne Server-Upload.",
       keywords: [
         "PDF unterschreiben online",
         "PDF kostenlos signieren",
@@ -57,9 +59,9 @@ export const SEO_COPY: SeoCatalog = {
       ],
     },
     fr: {
-      title: "PureSign — signer un PDF en ligne gratuitement",
+      title: "Signer un PDF en ligne gratuitement | PureSign",
       description:
-        "Signez, tamponnez, remplissez et numérotez des PDF en local. Outils gratuits et privés, sans inscription ni envoi sur un serveur.",
+        "Signer un PDF en ligne gratuitement : signature électronique, tampon, formulaires et numérotation en local dans le navigateur. Sans inscription ni envoi sur un serveur.",
       keywords: [
         "signer PDF en ligne gratuit",
         "signature électronique PDF",
@@ -71,9 +73,9 @@ export const SEO_COPY: SeoCatalog = {
       ],
     },
     es: {
-      title: "PureSign — firmar PDF online gratis en el navegador",
+      title: "Firmar PDF online gratis | PureSign",
       description:
-        "Firma, sella, rellena y numera PDF en local. Herramientas privadas y gratis, sin registro y sin subir archivos al servidor.",
+        "Firmar PDF online gratis: firma electrónica, sello, formularios y numeración en el navegador. Sin registro y sin subir documentos al servidor.",
       keywords: [
         "firmar PDF online gratis",
         "firma electrónica PDF",
@@ -85,9 +87,9 @@ export const SEO_COPY: SeoCatalog = {
       ],
     },
     pl: {
-      title: "PureSign — podpisz PDF online za darmo w przeglądarce",
+      title: "Podpisz PDF online za darmo | PureSign",
       description:
-        "Podpisuj, pieczętuj, wypełniaj i numeruj PDF lokalnie. Darmowe prywatne narzędzia bez rejestracji i bez wysyłania na serwer.",
+        "Podpisz PDF online za darmo: podpis elektroniczny, pieczęć, formularze i numeracja lokalnie w przeglądarce. Bez rejestracji i bez wysyłania na serwer.",
       keywords: [
         "podpisz PDF online za darmo",
         "podpis elektroniczny PDF",
@@ -101,35 +103,37 @@ export const SEO_COPY: SeoCatalog = {
   },
   sign: {
     uk: {
-      title: "Накласти підпис на PDF онлайн | PureSign",
+      title: "Підписати PDF онлайн — малювання та завантаження підпису | PureSign",
       description:
-        "Намалюйте підпис, введіть текст або завантажте PNG і поставте на PDF у браузері. Безкоштовно і повністю локально — файл не йде на сервер.",
+        "Підписати PDF онлайн безкоштовно: намалюйте підпис, введіть ім’я або завантажте цифровий PNG і поставте на документ у браузері. Файл не йде на сервер.",
       keywords: [
+        "підписати PDF онлайн безкоштовно",
         "накласти підпис на PDF",
-        "підписати PDF онлайн",
-        "малювати підпис",
+        "малювання підпису",
+        "завантаження цифрового підпису",
         "PNG підпис PDF",
         "електронний підпис безкоштовно",
         "PureSign",
       ],
     },
     en: {
-      title: "Add a PDF signature online | PureSign",
+      title: "Sign PDF Online Free — Draw or Upload e-Signature | PureSign",
       description:
-        "Draw, type, or upload a PNG signature and place it on a PDF in your browser. Free, private, and fully client-side.",
+        "Free online PDF signer: draw a signature, type your name, or upload a digital PNG and place it on the document in your browser. No server upload.",
       keywords: [
+        "sign PDF online free",
+        "draw signature online",
+        "upload digital signature",
         "add signature to PDF",
-        "sign PDF online",
-        "draw signature PDF",
-        "PNG signature",
+        "PNG signature PDF",
         "electronic signature free",
         "PureSign",
       ],
     },
     de: {
-      title: "PDF-Unterschrift online platzieren | PureSign",
+      title: "PDF unterschreiben — Zeichnen oder Signatur hochladen | PureSign",
       description:
-        "Unterschrift zeichnen, tippen oder als PNG laden und lokal auf ein PDF setzen. Kostenlos und ohne Server-Upload.",
+        "PDF online kostenlos unterschreiben: Unterschrift zeichnen, tippen oder als PNG hochladen und lokal auf das Dokument setzen. Ohne Server-Upload.",
       keywords: [
         "PDF unterschreiben",
         "Unterschrift auf PDF",
@@ -139,9 +143,9 @@ export const SEO_COPY: SeoCatalog = {
       ],
     },
     fr: {
-      title: "Ajouter une signature PDF en ligne | PureSign",
+      title: "Signer un PDF — dessiner ou importer une signature | PureSign",
       description:
-        "Dessinez, saisissez ou importez une signature PNG et placez-la sur un PDF dans le navigateur. Gratuit et 100 % local.",
+        "Signer un PDF en ligne gratuitement : dessinez une signature, saisissez un nom ou importez un PNG, puis placez-le sur le document. Sans envoi serveur.",
       keywords: [
         "ajouter signature PDF",
         "signer PDF en ligne",
@@ -151,9 +155,9 @@ export const SEO_COPY: SeoCatalog = {
       ],
     },
     es: {
-      title: "Añadir una firma PDF online | PureSign",
+      title: "Firmar PDF — dibujar o subir firma electrónica | PureSign",
       description:
-        "Dibuja, escribe o sube una firma PNG y colócala en un PDF en el navegador. Gratis y 100 % local, sin subir al servidor.",
+        "Firmar PDF online gratis: dibuja una firma, escribe tu nombre o sube un PNG digital y colócalo en el documento. Sin subir al servidor.",
       keywords: [
         "añadir firma PDF",
         "firmar PDF online",
@@ -163,9 +167,9 @@ export const SEO_COPY: SeoCatalog = {
       ],
     },
     pl: {
-      title: "Nałóż podpis na PDF online | PureSign",
+      title: "Podpisz PDF — narysuj lub wgraj podpis elektroniczny | PureSign",
       description:
-        "Narysuj, wpisz lub wgraj podpis PNG i umieść go na PDF w przeglądarce. Za darmo i w 100 % lokalnie — bez serwera.",
+        "Podpisz PDF online za darmo: narysuj podpis, wpisz imię lub wgraj cyfrowy PNG i umieść na dokumencie. Bez wysyłania na serwer.",
       keywords: [
         "nałóż podpis PDF",
         "podpisz PDF online",

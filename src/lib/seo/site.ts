@@ -65,20 +65,10 @@ export const OPEN_GRAPH_LOCALE: Record<Locale, string> = {
 
 /**
  * Absolute hreflang map for `<link rel="alternate">` and sitemap xhtml links.
+ * Always uses the public production origin so HTML, OG, and sitemap agree.
  * Includes every locale (self + peers) plus `x-default` → default locale.
  */
 export function buildLanguageAlternates(path: string): Record<string, string> {
-  const languages: Record<string, string> = {};
-
-  for (const locale of LOCALES) {
-    languages[HREFLANG_MAP[locale]] = absoluteUrl(localizedPath(locale, path));
-  }
-
-  languages["x-default"] = absoluteUrl(localizedPath(DEFAULT_LOCALE, path));
-  return languages;
-}
-
-export function buildSitemapLanguageAlternates(path: string): Record<string, string> {
   const languages: Record<string, string> = {};
 
   for (const locale of LOCALES) {
@@ -92,3 +82,5 @@ export function buildSitemapLanguageAlternates(path: string): Record<string, str
   );
   return languages;
 }
+
+export const buildSitemapLanguageAlternates = buildLanguageAlternates;
