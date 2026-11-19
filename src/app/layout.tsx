@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 
 import { Providers } from "@/app/providers";
 import { siteMetadataBase } from "@/lib/seo/metadata";
@@ -31,6 +32,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} dark min-h-dvh max-w-full overflow-x-hidden antialiased`}
     >
       <body className="flex min-h-dvh max-w-full flex-col overflow-x-hidden antialiased">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-FQM5D8R348"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-FQM5D8R348');
+          `}
+        </Script>
         <Providers>{children}</Providers>
         <div
           id="puresign-portal-root"
