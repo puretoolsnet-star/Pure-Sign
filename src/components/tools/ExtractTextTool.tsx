@@ -8,7 +8,7 @@ import { ToolShell } from "@/components/tools/ToolShell";
 import { useI18n } from "@/i18n/context";
 import { useProtectedAction } from "@/lib/bot-protection/use-protected-action";
 import { downloadText } from "@/lib/download";
-import { useRewardedDownload } from "@/lib/use-rewarded-download";
+import { useGuardedDownload } from "@/lib/use-guarded-download";
 import { extractPdfText } from "@/lib/pdf/extract-text";
 import { pickPdfFile } from "@/lib/pdf/pick-pdf";
 
@@ -21,7 +21,7 @@ export function ExtractTextTool() {
   const [processing, setProcessing] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { requestDownload, modal } = useRewardedDownload();
+  const { requestDownload, feedback } = useGuardedDownload();
   const { runProtected } = useProtectedAction();
 
   const addFile = useCallback(
@@ -125,7 +125,7 @@ export function ExtractTextTool() {
           </div>
         )}
         {error && <p className="text-sm text-rose-400">{error}</p>}
-        {modal}
+        {feedback}
       </div>
     </ToolShell>
   );

@@ -295,24 +295,4 @@ export const de: Dictionary = {
     unavailable:
       "Die Hintergrundprüfung des Browsers ist fehlgeschlagen. Seite neu laden und erneut versuchen.",
   },
-  toolAd: {
-    sponsored: "Anzeige",
-    slotTitle: "Werbefläche",
-    slotHint: "Partneranzeigen helfen, den Dienst kostenlos zu halten.",
-  },
-  rewardedAd: {
-    sponsored: "Projekt unterstützen",
-    title: "Fertiges Dokument herunterladen",
-    message:
-      "Ein kurzer Sponsor-Block ist die einzige Bedingung, damit PureSign kostenlos, vollständig privat und ohne Registrierung oder Abo bleibt.",
-    watch: "Sponsor-Video ansehen, um herunterzuladen",
-    watching: "Sponsor-Ansicht läuft…",
-    download: "Datei herunterladen",
-    waitHint:
-      "Tippen Sie unten, um den Adsterra-Sponsorblock zu starten. Ein Fortfahren ohne Ansehen ist nicht möglich.",
-    progress: (seconds) => `${seconds} s`,
-    thanks: "Danke für die Unterstützung. Die Datei wird jetzt heruntergeladen.",
-    close: "Schließen",
-    slotLabel: "Adsterra-Sponsorblock",
-  },
 };

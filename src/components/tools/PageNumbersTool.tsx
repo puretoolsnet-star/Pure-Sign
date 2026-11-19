@@ -8,7 +8,7 @@ import { PdfPageCanvas } from "@/components/tools/PdfPageCanvas";
 import { ToolShell } from "@/components/tools/ToolShell";
 import { useI18n } from "@/i18n/context";
 import { downloadBytes } from "@/lib/download";
-import { useRewardedDownload } from "@/lib/use-rewarded-download";
+import { useGuardedDownload } from "@/lib/use-guarded-download";
 import {
   addPageNumbers,
   type PageNumberFormat,
@@ -28,7 +28,7 @@ export function PageNumbersTool() {
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const preview = usePdfPreview(file);
-  const { requestDownload, modal } = useRewardedDownload();
+  const { requestDownload, feedback } = useGuardedDownload();
 
   const addFile = useCallback(
     (files: File[]) => {
@@ -174,7 +174,7 @@ export function PageNumbersTool() {
           </>
         )}
         {error && <p className="text-sm text-rose-400">{error}</p>}
-        {modal}
+        {feedback}
       </div>
     </ToolShell>
   );

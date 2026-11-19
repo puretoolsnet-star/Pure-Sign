@@ -7,7 +7,7 @@ import { FileDropzone } from "@/components/tools/FileDropzone";
 import { ToolShell } from "@/components/tools/ToolShell";
 import { useI18n } from "@/i18n/context";
 import { downloadBytes } from "@/lib/download";
-import { useRewardedDownload } from "@/lib/use-rewarded-download";
+import { useGuardedDownload } from "@/lib/use-guarded-download";
 import { protectPdfWithPassword } from "@/lib/pdf/protect";
 import { pickPdfFile } from "@/lib/pdf/pick-pdf";
 
@@ -19,7 +19,7 @@ export function ProtectPdfTool() {
   const [confirm, setConfirm] = useState("");
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { requestDownload, modal } = useRewardedDownload();
+  const { requestDownload, feedback } = useGuardedDownload();
 
   const addFile = useCallback(
     (files: File[]) => {
@@ -109,7 +109,7 @@ export function ProtectPdfTool() {
           </div>
         )}
         {error && <p className="text-sm text-rose-400">{error}</p>}
-        {modal}
+        {feedback}
       </div>
     </ToolShell>
   );

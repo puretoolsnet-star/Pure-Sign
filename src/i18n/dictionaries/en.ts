@@ -294,24 +294,4 @@ export const en: Dictionary = {
     unavailable:
       "Background browser verification did not complete. Refresh the page and try again.",
   },
-  toolAd: {
-    sponsored: "Sponsored",
-    slotTitle: "Ad space",
-    slotHint: "Partner placements here help keep the service free.",
-  },
-  rewardedAd: {
-    sponsored: "Support the project",
-    title: "Support the project with a short ad",
-    message:
-      "A short sponsor view is the only condition that keeps PureSign free, fully private, and without sign-ups or subscriptions.",
-    watch: "Watch sponsor video to download",
-    watching: "Sponsor view in progress…",
-    download: "Download file",
-    waitHint:
-      "Tap the button below to start the Adsterra sponsor block. There is no way to continue without watching.",
-    progress: (seconds) => `${seconds}s`,
-    thanks: "Thank you for the support. Your file will download now.",
-    close: "Close",
-    slotLabel: "Adsterra sponsor block",
-  },
 };

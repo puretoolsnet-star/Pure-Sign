@@ -8,7 +8,7 @@ import { PdfPageCanvas } from "@/components/tools/PdfPageCanvas";
 import { ToolShell } from "@/components/tools/ToolShell";
 import { useI18n } from "@/i18n/context";
 import { downloadBytes } from "@/lib/download";
-import { useRewardedDownload } from "@/lib/use-rewarded-download";
+import { useGuardedDownload } from "@/lib/use-guarded-download";
 import { applyOverlays, createOverlayId, type PdfOverlay } from "@/lib/pdf/overlays";
 import { pickPdfFile } from "@/lib/pdf/pick-pdf";
 import { usePdfPreview } from "@/lib/pdf/use-pdf-preview";
@@ -21,7 +21,7 @@ export function RedactTool() {
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const preview = usePdfPreview(file);
-  const { requestDownload, modal } = useRewardedDownload();
+  const { requestDownload, feedback } = useGuardedDownload();
 
   const addFile = useCallback(
     (files: File[]) => {
@@ -119,7 +119,7 @@ export function RedactTool() {
           </>
         )}
         {error && <p className="text-sm text-rose-400">{error}</p>}
-        {modal}
+        {feedback}
       </div>
     </ToolShell>
   );

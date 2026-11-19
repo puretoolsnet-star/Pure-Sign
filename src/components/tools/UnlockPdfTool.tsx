@@ -7,7 +7,7 @@ import { FileDropzone } from "@/components/tools/FileDropzone";
 import { ToolShell } from "@/components/tools/ToolShell";
 import { useI18n } from "@/i18n/context";
 import { downloadBytes } from "@/lib/download";
-import { useRewardedDownload } from "@/lib/use-rewarded-download";
+import { useGuardedDownload } from "@/lib/use-guarded-download";
 import { PdfPasswordRequiredError, unlockPdf } from "@/lib/pdf/unlock";
 import { pickPdfFile } from "@/lib/pdf/pick-pdf";
 
@@ -18,7 +18,7 @@ export function UnlockPdfTool() {
   const [password, setPassword] = useState("");
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { requestDownload, modal } = useRewardedDownload();
+  const { requestDownload, feedback } = useGuardedDownload();
 
   const addFile = useCallback(
     (files: File[]) => {
@@ -94,7 +94,7 @@ export function UnlockPdfTool() {
           </div>
         )}
         {error && <p className="text-sm text-rose-400">{error}</p>}
-        {modal}
+        {feedback}
       </div>
     </ToolShell>
   );

@@ -295,24 +295,4 @@ export const pl: Dictionary = {
     unavailable:
       "Weryfikacja przeglądarki nie powiodła się. Odśwież stronę i spróbuj ponownie.",
   },
-  toolAd: {
-    sponsored: "Sponsorowane",
-    slotTitle: "Miejsce na reklamę",
-    slotHint: "Reklamy partnerów pomagają utrzymać usługę bezpłatną.",
-  },
-  rewardedAd: {
-    sponsored: "Wesprzyj projekt",
-    title: "Pobierz gotowy dokument",
-    message:
-      "Krótki blok sponsora to jedyny warunek, by PureSign pozostał darmowy, w pełni prywatny i bez rejestracji oraz subskrypcji.",
-    watch: "Obejrzyj wideo sponsora, aby pobrać",
-    watching: "Trwa odtwarzanie sponsora…",
-    download: "Pobierz plik",
-    waitHint:
-      "Kliknij przycisk poniżej, aby uruchomić blok Adsterra. Nie można kontynuować bez obejrzenia.",
-    progress: (seconds) => `${seconds} s`,
-    thanks: "Dziękujemy za wsparcie. Plik zaraz się pobierze.",
-    close: "Zamknij",
-    slotLabel: "Blok sponsora Adsterra",
-  },
 };

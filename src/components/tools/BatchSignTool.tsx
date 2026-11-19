@@ -12,7 +12,7 @@ import {
 import { ToolShell } from "@/components/tools/ToolShell";
 import { useI18n } from "@/i18n/context";
 import { downloadZip } from "@/lib/download";
-import { useRewardedDownload } from "@/lib/use-rewarded-download";
+import { useGuardedDownload } from "@/lib/use-guarded-download";
 import { cn } from "@/lib/cn";
 import { signPdfFiles } from "@/lib/pdf/batch-sign";
 import { pickPdfFiles } from "@/lib/pdf/batch-sign";
@@ -46,7 +46,7 @@ export function BatchSignTool() {
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const preview = usePdfPreview(previewFile);
-  const { requestDownload, modal } = useRewardedDownload();
+  const { requestDownload, feedback } = useGuardedDownload();
 
   const addFiles = useCallback(
     (incoming: File[]) => {
@@ -279,7 +279,7 @@ export function BatchSignTool() {
           </>
         )}
         {error && <p className="text-sm text-rose-400">{error}</p>}
-        {modal}
+        {feedback}
       </div>
     </ToolShell>
   );

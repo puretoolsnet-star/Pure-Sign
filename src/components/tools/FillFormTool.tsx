@@ -8,7 +8,7 @@ import { PdfPageCanvas } from "@/components/tools/PdfPageCanvas";
 import { ToolShell } from "@/components/tools/ToolShell";
 import { useI18n } from "@/i18n/context";
 import { downloadBytes } from "@/lib/download";
-import { useRewardedDownload } from "@/lib/use-rewarded-download";
+import { useGuardedDownload } from "@/lib/use-guarded-download";
 import { fillPdfForm, readPdfFormFields, type FormFieldInfo } from "@/lib/pdf/fill-form";
 import { applyOverlays, createOverlayId, type PdfOverlay } from "@/lib/pdf/overlays";
 import { clampOverlay, pickPdfFile } from "@/lib/pdf/pick-pdf";
@@ -26,7 +26,7 @@ export function FillFormTool() {
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const preview = usePdfPreview(file);
-  const { requestDownload, modal } = useRewardedDownload();
+  const { requestDownload, feedback } = useGuardedDownload();
 
   const addFile = useCallback(
     async (incoming: File[]) => {
@@ -212,7 +212,7 @@ export function FillFormTool() {
           </>
         )}
         {error && <p className="text-sm text-rose-400">{error}</p>}
-        {modal}
+        {feedback}
       </div>
     </ToolShell>
   );

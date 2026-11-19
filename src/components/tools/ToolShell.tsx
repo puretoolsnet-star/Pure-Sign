@@ -69,7 +69,7 @@ export function ToolShell({ toolId, icon: Icon, children, className }: ToolShell
           className,
         )}
       >
-        <ToolWorkspaceLayout adSlot="tool-sidebar">{children}</ToolWorkspaceLayout>
+        <ToolWorkspaceLayout>{children}</ToolWorkspaceLayout>
         <PageSeoSection page={toolId} />
       </main>
 
