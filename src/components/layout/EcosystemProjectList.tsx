@@ -1,6 +1,6 @@
 "use client";
 
-import { PenTool, QrCode, Sparkles, Table2 } from "lucide-react";
+import { Image, PenTool, QrCode, Sparkles, Table2 } from "lucide-react";
 import Link from "next/link";
 
 import { useI18n } from "@/i18n/context";
@@ -13,6 +13,7 @@ import { cn } from "@/lib/cn";
 
 const PROJECT_ICONS: Record<EcosystemProjectId, typeof Sparkles> = {
   purepdf: Sparkles,
+  pureImage: Image,
   pureQr: QrCode,
   pureSign: PenTool,
   pureTable: Table2,

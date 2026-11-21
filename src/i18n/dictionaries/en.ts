@@ -24,6 +24,10 @@ export const en: Dictionary = {
         name: "PurePDF",
         tagline: "Tools for working with PDF.",
       },
+      pureImage: {
+        name: "PureImage",
+        tagline: "Edit and convert images locally in your browser.",
+      },
       pureQr: {
         name: "PureQR",
         tagline: "QR code generator and manager.",
