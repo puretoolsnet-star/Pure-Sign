@@ -24,6 +24,10 @@ export const pl: Dictionary = {
         name: "PurePDF",
         tagline: "Narzędzia do pracy z PDF.",
       },
+      pureConvert: {
+        name: "PureConvert",
+        tagline: "Konwersja formatów plików — lokalnie w przeglądarce.",
+      },
       pureImage: {
         name: "PureImage",
         tagline: "Edytuj i konwertuj obrazy lokalnie w przeglądarce.",

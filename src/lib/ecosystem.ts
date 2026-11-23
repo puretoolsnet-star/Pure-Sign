@@ -4,6 +4,7 @@ import { localizedPath } from "@/lib/i18n/routing";
 
 export type EcosystemProjectId =
   | "purepdf"
+  | "pureConvert"
   | "pureImage"
   | "pureQr"
   | "pureSign"
@@ -30,6 +31,11 @@ const purepdfOrigin = origin(
   "https://pdf.kixt.net",
 );
 
+const pureConvertOrigin = origin(
+  process.env.NEXT_PUBLIC_ECOSYSTEM_PURECONVERT_URL,
+  "https://convert.kixt.net",
+);
+
 const pureImageOrigin = origin(
   process.env.NEXT_PUBLIC_ECOSYSTEM_PUREIMAGE_URL,
   "https://img.kixt.net",
@@ -51,7 +57,7 @@ const pureTextOrigin = origin(
 );
 
 /**
- * Order: PurePDF → PureImage → PureQR → PureSign → PureTable → PureText.
+ * Order: PurePDF → PureConvert → PureImage → PureQR → PureSign → PureTable → PureText.
  * PureSign is the current app.
  */
 export const ECOSYSTEM_PROJECTS: EcosystemProjectMeta[] = [
@@ -59,6 +65,12 @@ export const ECOSYSTEM_PROJECTS: EcosystemProjectMeta[] = [
     id: "purepdf",
     status: "active",
     href: purepdfOrigin,
+    external: true,
+  },
+  {
+    id: "pureConvert",
+    status: "active",
+    href: pureConvertOrigin,
     external: true,
   },
   {
