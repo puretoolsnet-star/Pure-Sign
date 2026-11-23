@@ -40,6 +40,10 @@ export const pl: Dictionary = {
         name: "PureTable",
         tagline: "Narzędzie biznesowe do parsowania faktur do Excel/CSV.",
       },
+      pureText: {
+        name: "PureText",
+        tagline: "Narzędzia tekstowe — lokalnie w przeglądarce.",
+      },
     },
   },
   security: {

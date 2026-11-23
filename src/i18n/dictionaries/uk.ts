@@ -41,6 +41,10 @@ export const uk: Dictionary = {
         tagline:
           "Бізнес-утиліта для парсингу накладних у Excel/CSV.",
       },
+      pureText: {
+        name: "PureText",
+        tagline: "Інструменти для тексту — локально у браузері.",
+      },
     },
   },
   security: {
