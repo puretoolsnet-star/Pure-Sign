@@ -65,7 +65,7 @@ export const en: SeoPageContentCatalog = {
   sign: {
     heading: "Free online PDF signer — draw or upload an e-signature",
     intro:
-      "Sign a PDF in your browser without creating an account. Draw a handwritten signature, type your name, or upload a digital PNG, place it on the page, and download the signed file. The document stays on your device.",
+      "Sign a PDF or image in your browser without an account. Draw, type with script or business fonts, scan a signature with background cleanup, save favorites in localStorage, drag to position, and download. Processing stays on your device.",
     benefitsHeading: "Ways to add an e-signature",
     benefits: [
       {

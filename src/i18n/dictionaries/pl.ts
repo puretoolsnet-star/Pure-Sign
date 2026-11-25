@@ -113,10 +113,10 @@ export const pl: Dictionary = {
     sign: {
       title: "Nałóż podpis",
       description: "Podpis narysowany, tekstowy lub z obrazu PNG.",
-      hint: "Narysuj, wpisz lub wgraj PNG i umieść na stronie.",
+      hint: "Dodaj PDF lub obraz, utwórz podpis i przeciągnij go na stronę.",
       action: "Pobierz podpisany PDF",
       errors: {
-        invalid: "Wybierz plik PDF.",
+        invalid: "Wybierz plik PDF lub obrazu.",
         failed: "Nie udało się nałożyć podpisu.",
       },
     },
@@ -217,10 +217,94 @@ export const pl: Dictionary = {
     type: "Tekst",
     image: "PNG",
     clearPad: "Wyczyść płótno",
+    undo: "Cofnij",
+    lineWidth: "Grubość linii",
+    inkColor: "Kolor atramentu",
+    canvasHint: "Podpisz tutaj",
+    inkBlack: "Czarny atrament",
+    inkBlue: "Niebieski",
+    inkBallpoint: "Długopis",
+    insertNoVisibleInk:
+      "Brak widocznego atramentu na papierze. Narysuj ponownie lub wybierz ciemniejszy kolor.",
+    documentInkPreview: "Podgląd na białym papierze (jak w dokumencie)",
+    inkLight: "Jasny atrament",
+    inkGraphite: "Grafit",
+    inkRed: "Czerwony atrament",
+    padSurface: "Tło płótna",
+    padSurfacePaper: "Jasny arkusz",
+    padSurfaceGrid: "Przezroczysta siatka",
+    padSurfaceDark: "Ciemne tło",
+    padSurfaceAutoHint:
+      "Jasny atrament wymaga ciemnego tła — tylko podgląd, bez eksportu tła.",
     typePlaceholder: "Twoje imię",
+    typeStyle: "Styl czcionki",
+    typeStyleScript: "Odręczny",
+    typeStyleBusiness: "Biznesowy",
+    typePreview: "Podgląd podpisu",
+    typePreviewEmpty: "Wpisz tekst, by zobaczyć podgląd",
     uploadPng: "Wgraj przezroczysty PNG",
-    placeHint: "Kliknij stronę, aby umieścić podpis.",
-    size: "Rozmiar",
+    uploadImage: "Wgraj zdjęcie podpisu",
+    replaceImage: "Zmień obraz",
+    bgThreshold: "Próg usuwania papieru",
+    autoTrim: "Przytnij puste marginesy",
+    photoInk: "Kolor atramentu",
+    savedTitle: "Zapisane w tej przeglądarce",
+    savedUse: (name) => `Użyj „${name}”`,
+    savedDelete: (name) => `Usuń „${name}”`,
+    savedDefaultName: (date) => `Podpis ${date}`,
+    saveAs: "Zapisz jako",
+    saveAsPlaceholder: "Nazwa (opcjonalnie)",
+    saveLocal: "Zapisz",
+    placeHint: "Dotknij lub kliknij stronę, by umieścić podpis.",
+    overlayHint: "Przeciągaj, zmieniaj rozmiar w rogu — zapisuj podpisy lokalnie do szybkiego wklejania.",
+    placeAllPages: "Na każdej stronie",
+    quickMarks: "Szybkie znaki",
+    markCheck: "Ptaszek",
+    markCross: "Krzyżyk",
+    dragOverlay: "Przeciągnij lub zmień rozmiar",
+    overlayHideFrames: "Ukryj ramki",
+    overlayShowFrames: "Pokaż ramki",
+    removeSelected: "Usuń zaznaczone",
+    addSignature: "Dodaj podpis",
+    addInitials: "Inicjały",
+    addDate: "Data",
+    addText: "Tekst",
+    addStamp: "Pieczątka",
+    stampSheetHint: "Wybierz preset lub wpisz tekst pieczątki lub okrągłej pieczęci, potem wstaw.",
+    stampShapeRect: "Pieczątka prostokątna",
+    stampShapeRound: "Pieczęć okrągła",
+    stampCenterText: "Tekst centralny",
+    stampRingText: "Tekst wokół koła",
+    stampRingPlaceholder: "np. POŚWIADCZONA KOPIA",
+    stampLightImprint: "Lekki odcisk (półprzezroczysty)",
+    stampInkSeal: "Atrament pieczęci",
+    insertIntoDocument: "Wstaw do dokumentu",
+    creatorSheetHint: "Utwórz podpis tutaj — dokument pozostaje widoczny.",
+    documentFocusHint: "Dotknij elementu na stronie, aby go przesunąć. Dodawaj podpis z paska na dole.",
+    duplicateOverlay: "Duplikuj",
+    overlayAllPages: "Wszystkie strony",
+    downloadDocument: "Pobierz",
+    textOnPagePlaceholder: "Tekst na stronie",
+    dateSheetHint:
+      "Wybierz datę i/lub godzinę, format, kolor i rozmiar na jasnym podglądzie — potem wstaw na stronę.",
+    dateOnPageLabel: "Tekst daty",
+    dateOnPagePlaceholder: "np. 25.11.2026",
+    editDateOnDocument: "Edytujesz wybraną datę na dokumencie.",
+    editTextOnDocument: "Edytujesz wybrany tekst na dokumencie.",
+    documentFontLabel: "Czcionka",
+    documentFontPreview: "Podgląd na arkuszu",
+    documentFontPreviewSample: "Twój tekst",
+    documentFontSans: "Nowoczesny sans",
+    documentFontSerif: "Klasyczny serif",
+    documentFontScript: "Elegancki pismo",
+    documentFontMono: "Techniczne mono",
+    documentTextColor: "Kolor tekstu",
+    sizeOnDocument: "Rozmiar na stronie",
+    sizeOnDocumentDesktop: "Dopasuj rozmiar (zaznaczony element)",
+    desktopDragHint:
+      "Przeciągnij, by przesunąć; uchwyt w rogu zmienia rozmiar. Dotknij strony poza elementem, aby ukryć ramkę.",
+    desktopSavedHint: "Kliknij zapisany podpis, aby wstawić go na bieżącej stronie.",
+    size: "Rozmiar na stronie",
     emptyPad: "Najpierw narysuj, wpisz lub wgraj podpis.",
     canvasAria: "Płótno do rysowania podpisu",
   },
@@ -235,23 +319,64 @@ export const pl: Dictionary = {
     certified: "ZGODNIE Z ORYGINAŁEM",
     confidential: "POUFNE",
     approved: "ZATWIERDZONO",
+    agreed: "POGODZONE",
     received: "OTRZYMANO",
     copyStamp: "KOPIA",
   },
   fillForm: {
     fieldsTitle: "Pola formularza",
+    fieldsCount: (count) => {
+      if (count === 1) return "1 pole";
+      const mod10 = count % 10;
+      const mod100 = count % 100;
+      if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return `${count} pola`;
+      return `${count} pól`;
+    },
     noFields:
-      "Nie znaleziono pól interaktywnych. Kliknij stronę, aby dodać tekst.",
-    freeTextHint: "Kliknij dokument, aby wstawić dowolny tekst.",
-    textPlaceholder: "Tekst na stronie",
-    flatten: "Spłaszcz pola (flatten)",
+      "Brak pól interaktywnych — dodawaj bloki tekstu na stronie (skany i zwykłe PDF).",
+    workspaceHint: "Wypełnij pola poniżej albo umieszczaj tekst bezpośrednio na podglądzie dokumentu.",
+    freeTextTitle: "Tekst na stronie",
+    freeTextHint: "Wpisz tekst, wybierz czcionkę i kolor, potem naciśnij „Umieść na stronie”.",
+    addTextOnPage: "Umieść na stronie",
+    placeActive: "Dotknij dokumentu…",
+    tapPageHint: "Dotknij lub kliknij miejsce na stronie, gdzie ma być tekst.",
+    textPlaceholder: "Imię, data, kwota…",
+    flatten: "Osadź pola w pliku PDF",
     fieldFallback: (index) => `Pole ${index}`,
   },
   pageNumbers: {
-    position: "Pozycja",
-    format: "Format",
+    workspaceHint: "Podgląd na stronie aktualizuje się na żywo — pobierz PDF, gdy wygląda dobrze.",
+    position: "Pozycja na stronie",
+    format: "Format numeru",
     fontSize: "Rozmiar czcionki",
-    margin: "Odstęp",
+    margin: "Odstęp od krawędzi",
+    color: "Kolor tekstu",
+    fontLabel: "Czcionka",
+    fontSans: "Sans",
+    fontSerif: "Szeryfowa",
+    fontScript: "Odręczna",
+    fontMono: "Mono",
+    skipFirstPage: "Bez numeru na pierwszej stronie (okładka)",
+    startNumber: "Numeracja od",
+    startNumberHint: "Pierwsza numerowana strona pokaże tę wartość (często 1 po okładce).",
+    documentPageCount: (count) => {
+      if (count === 1) return "1 strona w tym dokumencie";
+      const mod10 = count % 10;
+      const mod100 = count % 100;
+      if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14))
+        return `${count} strony w tym dokumencie`;
+      return `${count} stron w tym dokumencie`;
+    },
+    numberedPagesCount: (count) => {
+      if (count === 1) return "1 strona zostanie ponumerowana";
+      const mod10 = count % 10;
+      const mod100 = count % 100;
+      if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14))
+        return `${count} strony zostaną ponumerowane`;
+      return `${count} stron zostanie ponumerowanych`;
+    },
+    noNumberOnThisPage: "Brak numeru na tym arkuszu (zgodnie z ustawieniami).",
+    livePreviewHint: "Numer na tej stronie:",
     headerLeft: "Nagłówek lewo",
     headerCenter: "Nagłówek środek",
     headerRight: "Nagłówek prawo",
@@ -263,14 +388,61 @@ export const pl: Dictionary = {
     formatPageOf: "Strona 1 z N",
   },
   redact: {
-    drawHint: "Przytrzymaj i przeciągnij, aby zamazać obszar na czarno.",
-    boxes: (count) => `${count} stref(y) cenzury`,
+    workspaceHint: "Zamaluj obszary na podglądzie i pobierz ocenzurowany PDF.",
+    drawMode: "Rysuj",
+    editMode: "Przesuń i rozmiar",
+    drawHint: "Przytrzymaj i przeciągnij na stronie, aby dodać prostokąt.",
+    drawHintMobile: "Przeciągnij po stronie — strona nie przewija się w tym trybie.",
+    editHint: "Dotknij prostokąta, by go przesunąć lub zmienić rozmiar. „Rysuj” — kolejny.",
+    editHintMobile: "Dotknij, przeciągnij lub zmień rozmiar. Nowy prostokąt przez „Rysuj”.",
+    inkColor: "Kolor prostokąta",
+    inkPreset: (id) =>
+      id === "black" ? "Czarny" : id === "graphite" ? "Grafitowy" : "Ciemnoniebieski",
+    boxesOnPage: (count) =>
+      count === 1 ? "1 prostokąt na tej stronie" : `${count} prostokątów na tej stronie`,
+    boxes: (count) => (count === 1 ? "1 prostokąt łącznie" : `${count} prostokątów łącznie`),
+    clearPage: "Wyczyść stronę",
+    clearAll: "Wyczyść wszystko",
+    deleteSelected: "Usuń zaznaczone",
     undo: "Cofnij ostatnie",
   },
   extract: {
+    workspaceHint:
+      "Wybierz zakres, uruchom ekstrakcję, edytuj, kopiuj lub pobierz. Wszystko na Twoim urządzeniu.",
+    modeAll: "Cały dokument",
+    modePage: "Ta strona",
+    modeRegion: "Obszar na stronie",
+    modeHint: (mode) =>
+      mode === "all"
+        ? "Wszystkie strony. Najpierw warstwa tekstu, przy skanach OCR na urządzeniu."
+        : mode === "page"
+          ? "Tekst z wyświetlanej strony."
+          : "Narysuj prostokąt, aby pobrać tylko ten fragment.",
+    modeHintMobile: (mode) =>
+      mode === "all"
+        ? "Wszystkie strony — tekst lub OCR."
+        : mode === "page"
+          ? "Tylko bieżąca strona."
+          : "Przeciągnij, aby zaznaczyć obszar.",
+    regionHint: "Zaznacz prostokątem i naciśnij „Wyodrębnij tekst”.",
+    regionHintMobile: "Przeciągnij po stronie — bez przewijania podczas zaznaczania.",
+    clearRegion: "Wyczyść zaznaczenie",
+    runExtract: "Wyodrębnij tekst",
+    statusReading: "Odczyt warstwy tekstu…",
+    statusReadingPage: (page, total) => `Odczyt tekstu (${page}/${total})…`,
+    statusOcr: (percent) => `Rozpoznawanie (${percent}%)…`,
+    statusOcrPage: (page, total, percent) =>
+      `Rozpoznawanie — strona ${page}/${total} (${percent}%)…`,
+    sourceTextLayer: "Z warstwy PDF",
+    sourceOcr: "OCR (skan)",
     resultTitle: "Wyodrębniony tekst",
     empty: "W tym dokumencie nie znaleziono warstwy tekstowej.",
+    emptyPlaceholder: "Tekst pojawi się tutaj. Możesz go edytować przed kopiowaniem.",
+    copy: "Kopiuj",
+    copied: "Skopiowano",
     downloadTxt: "Pobierz .txt",
+    clearResult: "Wyczyść tekst",
+    characters: (count) => `${count.toLocaleString()} znaków`,
     pagesExtracted: (count) => `Przetworzono stron: ${count}`,
   },
   dateStamp: {
@@ -279,27 +451,97 @@ export const pl: Dictionary = {
     formatTime: "Godzina",
     formatDateTime: "Data i godzina",
     previewLabel: "Podgląd",
-    placeHint: "Kliknij stronę, aby umieścić znacznik daty lub czasu.",
+    placeHint: "Dotknij lub kliknij stronę. Zaznacz znacznik, by zmienić datę lub kolor.",
     size: "Rozmiar",
     color: "Kolor",
+    pickDate: "Data",
+    pickTime: "Godzina",
+    today: "Dziś",
+    digitColor: "Kolor cyfr",
+    customColor: "Własny kolor",
+    editSelectedHint: "Edytujesz wybrany znacznik na dokumencie.",
+    dropHint: "Upuść PDF lub obraz, wybierz datę i kolor, potem umieść na stronie.",
+    invalidFile: "Wybierz plik PDF lub obraz.",
+    downloadStampedPdf: "Pobierz PDF ze znacznikiem",
+    downloadStampedImage: "Pobierz obraz ze znacznikiem",
   },
   protect: {
-    passwordLabel: "Hasło otwarcia PDF",
+    workspaceHint: "Ustaw hasło otwarcia i pobierz zaszyfrowany PDF. Wszystko na Twoim urządzeniu.",
+    lostPasswordWarning:
+      "Utraconego hasła nie da się odzyskać. Przechowuj hasło w bezpiecznym miejscu.",
+    passwordLabel: "Hasło otwarcia",
     passwordConfirm: "Potwierdź hasło",
+    showPassword: "Pokaż hasło",
+    hidePassword: "Ukryj hasło",
+    strengthHint: "Siła hasła",
+    strengthWeak: "Słabe",
+    strengthFair: "Średnie",
+    strengthGood: "Silne",
     mismatch: "Hasła się nie zgadzają.",
     minLength: "Hasło musi mieć co najmniej 4 znaki.",
+    restrictionsTitle: "Ograniczenia druku i kopiowania (opcjonalnie)",
+    restrictionsHint:
+      "Większości wystarczy hasło otwarcia. Włącz, aby zablokować druk lub kopiowanie tekstu po otwarciu.",
+    restrictPrinting: "Zablokuj drukowanie",
+    restrictCopying: "Zablokuj kopiowanie tekstu",
+    ownerPasswordLabel: "Hasło właściciela (opcjonalnie)",
+    ownerPasswordHint:
+      "Zostaw puste — ograniczenia zostaną ustawione automatycznie. Do udostępnienia wystarczy hasło otwarcia.",
+    statusEncrypting: "Szyfrowanie…",
+    alreadyEncrypted: "Plik jest już zaszyfrowany. Najpierw go odblokuj, potem chroń ponownie.",
+    passwordEncoding:
+      "Hasło zawiera znaki niedozwolone przy szyfrowaniu. Użyj prostszego lub opartego na literach łacińskich.",
   },
   unlock: {
-    passwordLabel: "Bieżące hasło (jeśli jest)",
-    passwordHint: "Zostaw puste, jeśli PDF nie ma hasła",
-    wrongPassword: "Nieprawidłowe hasło lub uszkodzony plik.",
+    workspaceHint:
+      "Usuń hasło otwarcia lub ograniczenia druku i kopiowania. Plik jest przetwarzany tylko na urządzeniu.",
+    passwordLabel: "Hasło otwarcia lub właściciela",
+    passwordPlaceholder: "Puste, jeśli nieznane",
+    passwordHintEncrypted:
+      "Wpisz hasło do otwarcia pliku. Działa też hasło właściciela.",
+    passwordHintOpen:
+      "Brak hasła otwarcia — pobierz kopię bez ograniczeń bez wpisywania hasła.",
+    showPassword: "Pokaż hasło",
+    hidePassword: "Ukryj hasło",
+    wrongPassword: "Nieprawidłowe hasło. Sprawdź i spróbuj ponownie.",
+    passwordRequired: "Ten PDF wymaga hasła otwarcia.",
+    statusChecking: "Sprawdzanie zabezpieczeń…",
+    statusEncrypted:
+      "Wykryto hasło lub ograniczenia — wpisz hasło, jeśli plik go wymaga przy otwarciu.",
+    statusNoEncryption:
+      "Brak hasła otwarcia — możesz pobrać kopię bez ograniczeń bez hasła.",
+    statusUnlocking: "Odblokowywanie…",
+    successUnlocked: "Pobrano odblokowaną kopię.",
   },
   batchSign: {
+    workspaceHint:
+      "Dodaj PDF-y, utwórz podpis, umieść na podglądzie, pobierz ZIP z podpisanymi plikami.",
     filesSelected: (count) => `Wybrano plików: ${count}`,
+    addFiles: "Dodaj PDF",
     clearList: "Wyczyść listę",
+    removeFile: "Usuń plik",
+    previewFileHint: "Dotknij nazwy, aby podejrzeć. Pozycja dotyczy wszystkich PDF w paczce.",
+    pageTargetTitle: "Na której stronie podpisać",
+    targetFirst: "Każdy PDF — pierwsza strona.",
+    targetFirstShort: "Pierwsza",
+    targetLast: "Każdy PDF — ostatnia strona.",
+    targetLastShort: "Ostatnia",
+    targetPage: (page) =>
+      `Każdy PDF — strona ${page} (lub ostatnia, jeśli dokument jest krótszy).`,
+    targetPageShort: "Numer strony",
+    pageNumberLabel: "Numer strony (1 = pierwsza)",
     positionNote:
-      "Pozycja na podglądzie dotyczy pierwszej strony każdego PDF w paczce.",
+      "Przeciągnij podpis na podglądzie, by ustawić miejsce i rozmiar — to samo w każdym pliku.",
+    placeHintMobile: "Dotknij stronę — bez przewijania podczas umieszczania.",
+    progressStatus: (index, total, fileName) =>
+      `Podpisywanie ${index}/${total}: ${fileName}`,
     zipAction: "Pobierz ZIP z podpisanymi PDF",
+    zipProcessing: "Podpisywanie i pakowanie ZIP…",
+    failedProtected: (name) => `${name} — chroniony hasłem. Najpierw odblokuj.`,
+    failedCorrupt: (name) => `${name} — nie można odczytać PDF.`,
+    failedGeneric: (name) => `${name} — podpis nie powiódł się.`,
+    partialSuccess: (ok, failed) =>
+      `ZIP: ${ok} podpisanych plików. Pominięto: ${failed} — lista poniżej.`,
   },
   botProtection: {
     rateLimited:

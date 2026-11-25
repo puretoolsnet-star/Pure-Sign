@@ -1,116 +1,92 @@
 "use client";
 
 import { CalendarClock, Loader2 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { FileDropzone } from "@/components/tools/FileDropzone";
 import { PdfPageCanvas } from "@/components/tools/PdfPageCanvas";
+import { DateInlinePanel } from "@/components/tools/signature/DateInlinePanel";
+import { SignDateOnPageEdit } from "@/components/tools/signature/SignDateOnPageEdit";
 import { ToolShell } from "@/components/tools/ToolShell";
+import { exportWithOverlays } from "@/lib/document/export-document";
+import { pickSignableFile } from "@/lib/document/pick-document";
+import { useDocumentPreview } from "@/lib/document/use-document-preview";
 import { useI18n } from "@/i18n/context";
 import { downloadBytes } from "@/lib/download";
 import { useGuardedDownload } from "@/lib/use-guarded-download";
-import { cn } from "@/lib/cn";
-import { applyOverlays, createOverlayId, type PdfOverlay } from "@/lib/pdf/overlays";
-import { clampOverlay, overlaySizeFromImage, pickPdfFile } from "@/lib/pdf/pick-pdf";
-import { renderStampPng } from "@/lib/pdf/stamp-image";
-import { usePdfPreview } from "@/lib/pdf/use-pdf-preview";
-
-type DateFormat = "date" | "time" | "datetime";
-
-const COLORS = ["#06b6d4", "#64748b", "#059669", "#d97706"];
-
-function loadImageSize(src: string) {
-  return new Promise<{ width: number; height: number }>((resolve, reject) => {
-    const image = new Image();
-    image.onload = () => resolve({ width: image.width, height: image.height });
-    image.onerror = () => reject(new Error("image"));
-    image.src = src;
-  });
-}
+import { createOverlayId, type PdfOverlay } from "@/lib/pdf/overlays";
+import { clampOverlay, overlaySizeFromImage } from "@/lib/pdf/pick-pdf";
+import { loadImageSize } from "@/lib/signatures/load-image-size";
 
 export function DateStampTool() {
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
   const copy = t.tools["date-stamp"];
   const [file, setFile] = useState<File | null>(null);
-  const [format, setFormat] = useState<DateFormat>("datetime");
-  const [color, setColor] = useState(COLORS[0]);
-  const [size, setSize] = useState(0.28);
   const [overlays, setOverlays] = useState<PdfOverlay[]>([]);
+  const [selectedOverlayId, setSelectedOverlayId] = useState<string | null>(null);
+  const [datePanelOpen, setDatePanelOpen] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const preview = usePdfPreview(file);
+  const preview = useDocumentPreview(file);
   const { requestDownload, feedback } = useGuardedDownload();
-
-  const [stampText, setStampText] = useState("—");
-
-  useEffect(() => {
-    const now = new Date();
-    if (format === "date") {
-      setStampText(new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(now));
-      return;
-    }
-    if (format === "time") {
-      setStampText(new Intl.DateTimeFormat(locale, { timeStyle: "short" }).format(now));
-      return;
-    }
-    setStampText(
-      new Intl.DateTimeFormat(locale, {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }).format(now),
-    );
-  }, [format, locale]);
 
   const addFile = useCallback(
     (files: File[]) => {
-      const pdf = pickPdfFile(files);
-      if (!pdf) {
-        setError(copy.errors.invalid);
+      const picked = pickSignableFile(files);
+      if (!picked) {
+        setError(t.dateStamp.invalidFile);
         return;
       }
       setError(null);
-      setFile(pdf);
+      setFile(picked);
       setOverlays([]);
+      setDatePanelOpen(true);
     },
-    [copy.errors.invalid],
+    [t.dateStamp.invalidFile],
   );
 
-  const formatStamp = useCallback(() => {
-    const now = new Date();
-    if (format === "date") {
-      return new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(now);
-    }
-    if (format === "time") {
-      return new Intl.DateTimeFormat(locale, { timeStyle: "short" }).format(now);
-    }
-    return new Intl.DateTimeFormat(locale, {
-      dateStyle: "medium",
-      timeStyle: "short",
-    }).format(now);
-  }, [format, locale]);
-
-  const place = async (x: number, y: number) => {
-    const label = formatStamp();
-    const dataUrl = await renderStampPng({ text: label, color });
-    const image = await loadImageSize(dataUrl);
-    const dims = overlaySizeFromImage(
-      image.width,
-      image.height,
-      preview.pageSize.width,
-      preview.pageSize.height,
-      size,
-    );
-    const box = clampOverlay(x - dims.width / 2, y - dims.height / 2, dims.width, dims.height);
-    setOverlays((current) => [
-      ...current,
-      {
+  const placeDate = useCallback(
+    async (payload: {
+      dataUrl: string;
+      relativeWidth: number;
+      meta: NonNullable<PdfOverlay["signDateMeta"]>;
+    }) => {
+      const image = await loadImageSize(payload.dataUrl);
+      const dims = overlaySizeFromImage(
+        image.width,
+        image.height,
+        preview.pageSize.width,
+        preview.pageSize.height,
+        payload.relativeWidth,
+      );
+      const box = clampOverlay(0.5 - dims.width / 2, 0.58 - dims.height / 2, dims.width, dims.height);
+      const overlay: PdfOverlay = {
         id: createOverlayId(),
         pageIndex: preview.pageIndex,
         kind: "image",
-        dataUrl,
+        dataUrl: payload.dataUrl,
+        signDateMeta: payload.meta,
+        color: payload.meta.color,
         ...box,
-      },
-    ]);
+      };
+      setOverlays((current) => [...current, overlay]);
+      setSelectedOverlayId(overlay.id);
+    },
+    [preview.pageIndex, preview.pageSize.height, preview.pageSize.width],
+  );
+
+  const selected = overlays.find((item) => item.id === selectedOverlayId) ?? null;
+  const selectedDate =
+    selected && (selected.signDateMeta || selected.stampMeta);
+
+  const resizeSelected = (relativeWidth: number) => {
+    if (!selected) return;
+    const aspect = selected.height / Math.max(selected.width, 0.0001);
+    const nextH = relativeWidth * aspect;
+    const patch = clampOverlay(selected.x, selected.y, relativeWidth, nextH);
+    setOverlays((current) =>
+      current.map((item) => (item.id === selected.id ? { ...item, ...patch } : item)),
+    );
   };
 
   const download = async () => {
@@ -118,8 +94,9 @@ export function DateStampTool() {
     setProcessing(true);
     setError(null);
     try {
-      const bytes = await applyOverlays(file, overlays);
-      downloadBytes(bytes, file.name.replace(/\.pdf$/i, "") + "-date-stamped.pdf");
+      const { bytes, mime, extension } = await exportWithOverlays(file, overlays);
+      const base = file.name.replace(/\.[^.]+$/i, "");
+      downloadBytes(bytes, `${base}-date-stamped.${extension}`, mime);
     } catch {
       setError(copy.errors.failed);
     } finally {
@@ -127,77 +104,41 @@ export function DateStampTool() {
     }
   };
 
+  const downloadLabel =
+    preview.kind === "image" ? t.dateStamp.downloadStampedImage : t.dateStamp.downloadStampedPdf;
+
   return (
     <ToolShell toolId="date-stamp" icon={CalendarClock}>
-      <div className="space-y-6">
+      <div className="min-w-0 space-y-3">
         {!file ? (
-          <FileDropzone title={t.common.dropzoneTitle} hint={copy.hint} onFiles={addFile} />
+          <FileDropzone title={t.common.dropzoneTitle} hint={t.dateStamp.dropHint} onFiles={addFile} />
         ) : (
           <>
-            <div className="glass-card space-y-4 rounded-2xl border-slate-800/60 p-4">
-              <p className="text-xs font-medium uppercase tracking-wider text-gray-500">
-                {t.dateStamp.formatLabel}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {(
-                  [
-                    ["date", t.dateStamp.formatDate],
-                    ["time", t.dateStamp.formatTime],
-                    ["datetime", t.dateStamp.formatDateTime],
-                  ] as const
-                ).map(([value, label]) => (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => setFormat(value)}
-                    className={cn(
-                      "rounded-xl px-3 py-2 text-sm font-medium",
-                      format === value
-                        ? "bg-cyan-500/20 text-white"
-                        : "text-gray-400 hover:bg-white/5 hover:text-white",
-                    )}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-              <p className="text-sm text-gray-300">
-                <span className="text-gray-500">{t.dateStamp.previewLabel}: </span>
-                {stampText}
-              </p>
-              <p className="text-xs font-medium uppercase tracking-wider text-gray-500">
-                {t.dateStamp.color}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {COLORS.map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    aria-label={item}
-                    onClick={() => setColor(item)}
-                    className={cn(
-                      "h-8 w-8 rounded-full ring-2 ring-offset-2 ring-offset-slate-900",
-                      color === item ? "ring-cyan-400" : "ring-transparent",
-                    )}
-                    style={{ backgroundColor: item }}
-                  />
-                ))}
-              </div>
-              <label className="block text-sm text-gray-400">
-                {t.dateStamp.size}
-                <input
-                  type="range"
-                  min={0.12}
-                  max={0.5}
-                  step={0.01}
-                  value={size}
-                  onChange={(event) => setSize(Number(event.target.value))}
-                  className="mt-2 w-full"
-                />
-              </label>
-              <p className="text-xs text-gray-500">{t.dateStamp.placeHint}</p>
-            </div>
-
+            <DateInlinePanel
+              open={datePanelOpen}
+              onClose={() => setDatePanelOpen(false)}
+              onInsert={(payload) => void placeDate(payload)}
+            />
+            {!datePanelOpen ? (
+              <button
+                type="button"
+                className="btn-secondary w-full text-sm"
+                onClick={() => setDatePanelOpen(true)}
+              >
+                {t.sign.addDate}
+              </button>
+            ) : null}
+            {selectedDate && selected ? (
+              <SignDateOnPageEdit
+                overlay={selected}
+                pageSize={preview.pageSize}
+                onOverlayPatched={(id, patch) =>
+                  setOverlays((current) =>
+                    current.map((item) => (item.id === id ? { ...item, ...patch } : item)),
+                  )
+                }
+              />
+            ) : null}
             <PdfPageCanvas
               pageImage={preview.pageImage}
               pageIndex={preview.pageIndex}
@@ -205,12 +146,24 @@ export function DateStampTool() {
               overlays={overlays}
               loading={preview.loading}
               onPageChange={preview.setPageIndex}
-              onPlace={place}
-              onRemoveOverlay={(id) =>
-                setOverlays((current) => current.filter((item) => item.id !== id))
+              interaction="none"
+              editableOverlays
+              overlayToolbar="minimal"
+              selectedOverlayId={selectedOverlayId}
+              onSelectOverlay={setSelectedOverlayId}
+              onOverlayChange={(id, patch) =>
+                setOverlays((current) =>
+                  current.map((item) => (item.id === id ? { ...item, ...patch } : item)),
+                )
               }
+              onRemoveOverlay={(id) => {
+                setOverlays((current) => current.filter((item) => item.id !== id));
+                setSelectedOverlayId((current) => (current === id ? null : current));
+              }}
+              desktopDragHint
+              selectedOverlay={selected}
+              onSelectedOverlayResize={resizeSelected}
             />
-
             <div className="flex flex-wrap gap-3">
               <button
                 type="button"
@@ -219,7 +172,7 @@ export function DateStampTool() {
                 onClick={() => requestDownload(download)}
               >
                 {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                {copy.action}
+                {downloadLabel}
               </button>
               <button
                 type="button"

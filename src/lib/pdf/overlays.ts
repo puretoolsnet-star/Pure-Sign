@@ -1,6 +1,30 @@
+import type { DateStampFormat } from "@/lib/date-stamp/format";
+import type { DocumentTextFontId } from "@/lib/document-text/fonts";
+import type { DocumentStampMeta } from "@/lib/stamps/types";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 
 export type OverlayKind = "image" | "text" | "rect";
+
+export type DateStampOverlayMeta = {
+  instant: string;
+  format: "date" | "time" | "datetime";
+  color: string;
+};
+
+/** Date/time stamp on the sign tool document. */
+export type SignDateOverlayMeta = {
+  instant: string;
+  format: DateStampFormat;
+  color: string;
+  /** Optional manual text override on the document. */
+  customLabel?: string;
+};
+
+export type DocumentTextOverlayMeta = {
+  text: string;
+  color: string;
+  fontId: DocumentTextFontId;
+};
 
 export type PdfOverlay = {
   id: string;
@@ -15,6 +39,13 @@ export type PdfOverlay = {
   dataUrl?: string;
   text?: string;
   color?: string;
+  /** Live date-stamp source so preview and export can be updated after placement. */
+  stampMeta?: DateStampOverlayMeta;
+  signDateMeta?: SignDateOverlayMeta;
+  /** Rectangular stamp or round seal on the sign workspace. */
+  documentStampMeta?: DocumentStampMeta;
+  /** Free text on the document; rasterized to dataUrl for reliable export. */
+  textMeta?: DocumentTextOverlayMeta;
 };
 
 function hexToRgb(hex: string) {
@@ -77,13 +108,14 @@ export async function applyOverlays(
     }
 
     if (overlay.kind === "rect") {
+      const tint = overlay.color ? hexToRgb(overlay.color) : { r: 0, g: 0, b: 0 };
       page.drawRectangle({
         x,
         y,
         width,
         height,
-        color: rgb(0, 0, 0),
-        borderColor: rgb(0, 0, 0),
+        color: rgb(tint.r, tint.g, tint.b),
+        borderColor: rgb(tint.r, tint.g, tint.b),
         borderWidth: 0,
       });
     }

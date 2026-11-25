@@ -14,8 +14,10 @@ export function ToolWorkspaceLayout({
   workspaceClassName,
 }: ToolWorkspaceLayoutProps) {
   return (
-    <div className={cn("min-w-0", className)}>
-      <div className={cn("relative z-10 min-w-0", workspaceClassName)}>{children}</div>
+    <div className={cn("sign-workspace min-w-0", className)}>
+      <div className={cn("relative z-10 min-w-0 overflow-x-clip", workspaceClassName)}>
+        {children}
+      </div>
     </div>
   );
 }

@@ -19,9 +19,10 @@ type ToolShellProps = {
   icon: LucideIcon;
   children: ReactNode;
   className?: string;
+  compact?: boolean;
 };
 
-export function ToolShell({ toolId, icon: Icon, children, className }: ToolShellProps) {
+export function ToolShell({ toolId, icon: Icon, children, className, compact }: ToolShellProps) {
   const { t } = useI18n();
   const href = useLocalizedPath();
   const copy = t.tools[toolId];
@@ -45,19 +46,35 @@ export function ToolShell({ toolId, icon: Icon, children, className }: ToolShell
           <span className="min-w-0 truncate">{t.security.toolNote}</span>
         </div>
 
-        <div className="mt-6 flex min-w-0 items-start gap-3 sm:gap-4">
+        <div className={cn("flex min-w-0 items-start gap-3 sm:gap-4", compact ? "mt-3" : "mt-6")}>
           <div
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-500/15 ring-1 ring-cyan-500/30 sm:h-12 sm:w-12"
+            className={cn(
+              "flex shrink-0 items-center justify-center rounded-xl bg-cyan-500/15 ring-1 ring-cyan-500/30",
+              compact ? "h-9 w-9" : "h-10 w-10 sm:h-12 sm:w-12",
+            )}
             aria-hidden
           >
-            <Icon className="h-5 w-5 text-cyan-400 sm:h-6 sm:w-6" aria-hidden />
+            <Icon
+              className={cn("text-cyan-400", compact ? "h-4 w-4" : "h-5 w-5 sm:h-6 sm:w-6")}
+              aria-hidden
+            />
           </div>
           <div className="min-w-0 flex-1">
-            <h1 className="text-xl font-semibold tracking-tight text-white sm:text-3xl">
+            <h1
+              className={cn(
+                "font-semibold tracking-tight text-white",
+                compact ? "text-lg sm:text-xl" : "text-xl sm:text-3xl",
+              )}
+            >
               {copy.title}
             </h1>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-gray-400 sm:text-base">
-              {copy.description}
+            <p
+              className={cn(
+                "max-w-2xl leading-relaxed text-gray-400",
+                compact ? "mt-1 text-xs sm:text-sm" : "mt-2 text-sm sm:text-base",
+              )}
+            >
+              {compact ? copy.hint : copy.description}
             </p>
           </div>
         </div>

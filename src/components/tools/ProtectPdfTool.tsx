@@ -1,14 +1,15 @@
 "use client";
 
-import { Loader2, LockKeyhole } from "lucide-react";
+import { LockKeyhole } from "lucide-react";
 import { useCallback, useState } from "react";
 
+import { ProtectPdfWorkspace } from "@/components/tools/protect-pdf/ProtectPdfWorkspace";
 import { FileDropzone } from "@/components/tools/FileDropzone";
 import { ToolShell } from "@/components/tools/ToolShell";
 import { useI18n } from "@/i18n/context";
 import { downloadBytes } from "@/lib/download";
 import { useGuardedDownload } from "@/lib/use-guarded-download";
-import { protectPdfWithPassword } from "@/lib/pdf/protect";
+import { ProtectPdfError, protectPdfWithPassword } from "@/lib/pdf/protect";
 import { pickPdfFile } from "@/lib/pdf/pick-pdf";
 
 export function ProtectPdfTool() {
@@ -17,6 +18,9 @@ export function ProtectPdfTool() {
   const [file, setFile] = useState<File | null>(null);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [restrictPrinting, setRestrictPrinting] = useState(false);
+  const [restrictCopying, setRestrictCopying] = useState(false);
+  const [ownerPassword, setOwnerPassword] = useState("");
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { requestDownload, feedback } = useGuardedDownload();
@@ -30,9 +34,22 @@ export function ProtectPdfTool() {
       }
       setError(null);
       setFile(pdf);
+      setPassword("");
+      setConfirm("");
+      setOwnerPassword("");
+      setRestrictPrinting(false);
+      setRestrictCopying(false);
     },
     [copy.errors.invalid],
   );
+
+  const resolveError = (cause: unknown) => {
+    if (cause instanceof ProtectPdfError) {
+      if (cause.code === "already_encrypted") return t.protect.alreadyEncrypted;
+      if (cause.code === "password_encoding") return t.protect.passwordEncoding;
+    }
+    return copy.errors.failed;
+  };
 
   const download = async () => {
     if (!file) return;
@@ -47,68 +64,58 @@ export function ProtectPdfTool() {
     setProcessing(true);
     setError(null);
     try {
-      const bytes = await protectPdfWithPassword(file, password);
+      const bytes = await protectPdfWithPassword(file, password, {
+        allowPrinting: !restrictPrinting,
+        allowCopying: !restrictCopying,
+        ownerPassword: ownerPassword.trim() || undefined,
+      });
       downloadBytes(bytes, file.name.replace(/\.pdf$/i, "") + "-protected.pdf");
-    } catch {
-      setError(copy.errors.failed);
+    } catch (cause) {
+      setError(resolveError(cause));
     } finally {
       setProcessing(false);
     }
   };
 
+  const reset = () => {
+    setFile(null);
+    setPassword("");
+    setConfirm("");
+    setOwnerPassword("");
+    setRestrictPrinting(false);
+    setRestrictCopying(false);
+    setError(null);
+  };
+
   return (
     <ToolShell toolId="protect-pdf" icon={LockKeyhole}>
-      <div className="space-y-6">
+      <div className="min-w-0 space-y-4">
         {!file ? (
           <FileDropzone title={t.common.dropzoneTitle} hint={copy.hint} onFiles={addFile} />
         ) : (
-          <div className="glass-card space-y-4 rounded-2xl border-slate-800/60 p-4 sm:p-5">
-            <p className="text-sm text-gray-300">{file.name}</p>
-            <label className="block text-sm text-gray-400">
-              {t.protect.passwordLabel}
-              <input
-                type="password"
-                autoComplete="new-password"
-                className="input-field mt-2"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </label>
-            <label className="block text-sm text-gray-400">
-              {t.protect.passwordConfirm}
-              <input
-                type="password"
-                autoComplete="new-password"
-                className="input-field mt-2"
-                value={confirm}
-                onChange={(event) => setConfirm(event.target.value)}
-              />
-            </label>
-            <div className="flex flex-wrap gap-3">
-              <button
-                type="button"
-                className="btn-primary"
-                disabled={processing || !password || !confirm}
-                onClick={() => requestDownload(download)}
-              >
-                {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                {copy.action}
-              </button>
-              <button
-                type="button"
-                className="btn-secondary"
-                onClick={() => {
-                  setFile(null);
-                  setPassword("");
-                  setConfirm("");
-                }}
-              >
-                {t.common.clear}
-              </button>
-            </div>
-          </div>
+          <ProtectPdfWorkspace
+            fileName={file.name}
+            password={password}
+            setPassword={setPassword}
+            confirm={confirm}
+            setConfirm={setConfirm}
+            restrictPrinting={restrictPrinting}
+            setRestrictPrinting={setRestrictPrinting}
+            restrictCopying={restrictCopying}
+            setRestrictCopying={setRestrictCopying}
+            ownerPassword={ownerPassword}
+            setOwnerPassword={setOwnerPassword}
+            processing={processing}
+            onDownload={() => requestDownload(download)}
+            downloadLabel={copy.action}
+          />
         )}
-        {error && <p className="text-sm text-rose-400">{error}</p>}
+        {file ? (
+          <button type="button" className="btn-secondary w-full sm:w-auto" onClick={reset}>
+            {t.common.clear}
+          </button>
+        ) : null}
+        {error ? <p className="text-sm text-rose-400">{error}</p> : null}
         {feedback}
       </div>
     </ToolShell>

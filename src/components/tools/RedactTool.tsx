@@ -1,15 +1,15 @@
 "use client";
 
-import { Eraser, Loader2 } from "lucide-react";
+import { Eraser } from "lucide-react";
 import { useCallback, useState } from "react";
 
+import { RedactWorkspace } from "@/components/tools/redact/RedactWorkspace";
 import { FileDropzone } from "@/components/tools/FileDropzone";
-import { PdfPageCanvas } from "@/components/tools/PdfPageCanvas";
 import { ToolShell } from "@/components/tools/ToolShell";
 import { useI18n } from "@/i18n/context";
 import { downloadBytes } from "@/lib/download";
 import { useGuardedDownload } from "@/lib/use-guarded-download";
-import { applyOverlays, createOverlayId, type PdfOverlay } from "@/lib/pdf/overlays";
+import { applyOverlays, type PdfOverlay } from "@/lib/pdf/overlays";
 import { pickPdfFile } from "@/lib/pdf/pick-pdf";
 import { usePdfPreview } from "@/lib/pdf/use-pdf-preview";
 
@@ -53,69 +53,33 @@ export function RedactTool() {
 
   return (
     <ToolShell toolId="redact" icon={Eraser}>
-      <div className="space-y-6">
+      <div className="min-w-0 space-y-4">
         {!file ? (
           <FileDropzone title={t.common.dropzoneTitle} hint={copy.hint} onFiles={addFile} />
         ) : (
           <>
-            <div className="glass-card space-y-2 rounded-2xl border-slate-800/60 p-4">
-              <p className="text-sm text-gray-300">{t.redact.drawHint}</p>
-              <p className="text-xs text-gray-500">{t.redact.boxes(overlays.length)}</p>
-            </div>
-
-            <PdfPageCanvas
+            <RedactWorkspace
               pageImage={preview.pageImage}
               pageIndex={preview.pageIndex}
               numPages={preview.numPages}
-              overlays={overlays}
-              interaction="draw-rect"
               loading={preview.loading}
               onPageChange={preview.setPageIndex}
-              onDrawRect={(rect) =>
-                setOverlays((current) => [
-                  ...current,
-                  {
-                    id: createOverlayId(),
-                    pageIndex: preview.pageIndex,
-                    kind: "rect",
-                    ...rect,
-                  },
-                ])
-              }
-              onRemoveOverlay={(id) =>
-                setOverlays((current) => current.filter((item) => item.id !== id))
-              }
+              overlays={overlays}
+              setOverlays={setOverlays}
+              onDownload={() => requestDownload(download)}
+              downloading={processing}
+              downloadLabel={copy.action}
             />
-
-            <div className="flex flex-wrap gap-3">
-              <button
-                type="button"
-                className="btn-primary"
-                disabled={processing || overlays.length === 0}
-                onClick={() => requestDownload(download)}
-              >
-                {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                {copy.action}
-              </button>
-              <button
-                type="button"
-                className="btn-secondary"
-                disabled={overlays.length === 0}
-                onClick={() => setOverlays((current) => current.slice(0, -1))}
-              >
-                {t.redact.undo}
-              </button>
-              <button
-                type="button"
-                className="btn-secondary"
-                onClick={() => {
-                  setFile(null);
-                  setOverlays([]);
-                }}
-              >
-                {t.common.clear}
-              </button>
-            </div>
+            <button
+              type="button"
+              className="btn-secondary w-full sm:w-auto"
+              onClick={() => {
+                setFile(null);
+                setOverlays([]);
+              }}
+            >
+              {t.common.clear}
+            </button>
           </>
         )}
         {error && <p className="text-sm text-rose-400">{error}</p>}

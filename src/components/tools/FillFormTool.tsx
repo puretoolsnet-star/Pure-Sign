@@ -1,17 +1,17 @@
 "use client";
 
-import { Loader2, TextCursorInput } from "lucide-react";
+import { TextCursorInput } from "lucide-react";
 import { useCallback, useState } from "react";
 
+import { FillFormWorkspace } from "@/components/tools/fill-form/FillFormWorkspace";
 import { FileDropzone } from "@/components/tools/FileDropzone";
-import { PdfPageCanvas } from "@/components/tools/PdfPageCanvas";
 import { ToolShell } from "@/components/tools/ToolShell";
 import { useI18n } from "@/i18n/context";
 import { downloadBytes } from "@/lib/download";
 import { useGuardedDownload } from "@/lib/use-guarded-download";
 import { fillPdfForm, readPdfFormFields, type FormFieldInfo } from "@/lib/pdf/fill-form";
-import { applyOverlays, createOverlayId, type PdfOverlay } from "@/lib/pdf/overlays";
-import { clampOverlay, pickPdfFile } from "@/lib/pdf/pick-pdf";
+import { applyOverlays, type PdfOverlay } from "@/lib/pdf/overlays";
+import { pickPdfFile } from "@/lib/pdf/pick-pdf";
 import { usePdfPreview } from "@/lib/pdf/use-pdf-preview";
 
 export function FillFormTool() {
@@ -20,7 +20,6 @@ export function FillFormTool() {
   const [file, setFile] = useState<File | null>(null);
   const [fields, setFields] = useState<FormFieldInfo[]>([]);
   const [values, setValues] = useState<Record<string, string>>({});
-  const [freeText, setFreeText] = useState("");
   const [flatten, setFlatten] = useState(true);
   const [overlays, setOverlays] = useState<PdfOverlay[]>([]);
   const [processing, setProcessing] = useState(false);
@@ -41,32 +40,13 @@ export function FillFormTool() {
       try {
         const nextFields = await readPdfFormFields(pdf);
         setFields(nextFields);
-        setValues(
-          Object.fromEntries(nextFields.map((field) => [field.name, field.value])),
-        );
+        setValues(Object.fromEntries(nextFields.map((field) => [field.name, field.value])));
       } catch {
         setFields([]);
       }
     },
     [copy.errors.invalid],
   );
-
-  const place = (x: number, y: number) => {
-    if (!freeText.trim()) return;
-    const width = 0.28;
-    const height = 0.035;
-    const box = clampOverlay(x - width / 2, y - height / 2, width, height);
-    setOverlays((current) => [
-      ...current,
-      {
-        id: createOverlayId(),
-        pageIndex: preview.pageIndex,
-        kind: "text",
-        text: freeText.trim(),
-        ...box,
-      },
-    ]);
-  };
 
   const download = async () => {
     if (!file) return;
@@ -90,125 +70,39 @@ export function FillFormTool() {
 
   return (
     <ToolShell toolId="fill-form" icon={TextCursorInput}>
-      <div className="space-y-6">
+      <div className="space-y-4">
         {!file ? (
           <FileDropzone title={t.common.dropzoneTitle} hint={copy.hint} onFiles={(files) => void addFile(files)} />
         ) : (
           <>
-            <div className="glass-card space-y-4 rounded-2xl border-slate-800/60 p-4">
-              <h2 className="text-sm font-semibold text-white">{t.fillForm.fieldsTitle}</h2>
-              {fields.length === 0 ? (
-                <p className="text-sm text-gray-400">{t.fillForm.noFields}</p>
-              ) : (
-                <ul className="space-y-3">
-                  {fields.map((field, index) => (
-                    <li key={field.name}>
-                      <label className="block text-sm text-gray-300">
-                        {field.name || t.fillForm.fieldFallback(index + 1)}
-                        {field.type === "checkbox" ? (
-                          <input
-                            type="checkbox"
-                            className="ml-2 accent-primary"
-                            checked={values[field.name] === "true"}
-                            onChange={(event) =>
-                              setValues((current) => ({
-                                ...current,
-                                [field.name]: event.target.checked ? "true" : "false",
-                              }))
-                            }
-                          />
-                        ) : field.type === "dropdown" ? (
-                          <select
-                            className="input-field mt-2"
-                            value={values[field.name] ?? ""}
-                            onChange={(event) =>
-                              setValues((current) => ({
-                                ...current,
-                                [field.name]: event.target.value,
-                              }))
-                            }
-                          >
-                            <option value="">—</option>
-                            {(field.options ?? []).map((option) => (
-                              <option key={option} value={option}>
-                                {option}
-                              </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <input
-                            className="input-field mt-2"
-                            value={values[field.name] ?? ""}
-                            onChange={(event) =>
-                              setValues((current) => ({
-                                ...current,
-                                [field.name]: event.target.value,
-                              }))
-                            }
-                          />
-                        )}
-                      </label>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {fields.length > 0 && (
-                <label className="flex items-center gap-2 text-sm text-gray-300">
-                  <input
-                    type="checkbox"
-                    className="accent-primary"
-                    checked={flatten}
-                    onChange={(event) => setFlatten(event.target.checked)}
-                  />
-                  {t.fillForm.flatten}
-                </label>
-              )}
-              <label className="block text-sm text-gray-400">
-                {t.fillForm.freeTextHint}
-                <input
-                  className="input-field mt-2"
-                  value={freeText}
-                  onChange={(event) => setFreeText(event.target.value)}
-                  placeholder={t.fillForm.textPlaceholder}
-                />
-              </label>
-            </div>
-
-            <PdfPageCanvas
+            <FillFormWorkspace
+              fields={fields}
+              values={values}
+              onValuesChange={setValues}
+              flatten={flatten}
+              onFlattenChange={setFlatten}
+              overlays={overlays}
+              setOverlays={setOverlays}
               pageImage={preview.pageImage}
               pageIndex={preview.pageIndex}
               numPages={preview.numPages}
-              overlays={overlays}
+              pageSize={preview.pageSize}
               loading={preview.loading}
               onPageChange={preview.setPageIndex}
-              onPlace={place}
-              onRemoveOverlay={(id) =>
-                setOverlays((current) => current.filter((item) => item.id !== id))
-              }
+              onDownload={() => requestDownload(download)}
+              downloading={processing}
             />
-
-            <div className="flex flex-wrap gap-3">
-              <button
-                type="button"
-                className="btn-primary"
-                disabled={processing}
-                onClick={() => requestDownload(download)}
-              >
-                {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                {copy.action}
-              </button>
-              <button
-                type="button"
-                className="btn-secondary"
-                onClick={() => {
-                  setFile(null);
-                  setFields([]);
-                  setOverlays([]);
-                }}
-              >
-                {t.common.clear}
-              </button>
-            </div>
+            <button
+              type="button"
+              className="btn-secondary w-full sm:w-auto"
+              onClick={() => {
+                setFile(null);
+                setFields([]);
+                setOverlays([]);
+              }}
+            >
+              {t.common.clear}
+            </button>
           </>
         )}
         {error && <p className="text-sm text-rose-400">{error}</p>}

@@ -59,9 +59,57 @@ video {
 }
 
 .signature-canvas,
-[data-draw-stage] {
+[data-draw-stage],
+[data-signature-pad] {
   touch-action: none;
   -ms-touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sign-workspace {
+  overflow-x: clip;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.signature-paper-surface--paper {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.signature-paper-surface--grid {
+  background-color: #f8fafc;
+  background-image:
+    linear-gradient(rgb(203 213 225 / 0.45) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(203 213 225 / 0.45) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+.signature-paper-surface--dark {
+  background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+}
+
+.signature-paper-baseline {
+  bottom: 32%;
+  height: 0;
+  border-bottom: 1px dashed rgb(148 163 184 / 0.65);
+}
+
+.signature-paper-surface--dark .signature-paper-baseline {
+  border-bottom-color: rgb(71 85 105 / 0.85);
+}
+
+.signature-paper-surface .signature-canvas {
+  background: transparent !important;
+}
+
+.signature-overlay-image {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal;
+  image-rendering: auto;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 .input-field {

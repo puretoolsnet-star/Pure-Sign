@@ -1,91 +1,89 @@
 "use client";
 
 import { Loader2, Stamp } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { FileDropzone } from "@/components/tools/FileDropzone";
 import { PdfPageCanvas } from "@/components/tools/PdfPageCanvas";
+import { DocumentSelectedQuickEdit } from "@/components/tools/signature/DocumentSelectedQuickEdit";
+import { StampInlinePanel } from "@/components/tools/signature/StampInlinePanel";
 import { ToolShell } from "@/components/tools/ToolShell";
+import { exportWithOverlays } from "@/lib/document/export-document";
+import { pickSignableFile } from "@/lib/document/pick-document";
+import { useDocumentPreview } from "@/lib/document/use-document-preview";
 import { useI18n } from "@/i18n/context";
 import { downloadBytes } from "@/lib/download";
 import { useGuardedDownload } from "@/lib/use-guarded-download";
-import { cn } from "@/lib/cn";
-import { applyOverlays, createOverlayId, type PdfOverlay } from "@/lib/pdf/overlays";
-import { clampOverlay, overlaySizeFromImage, pickPdfFile } from "@/lib/pdf/pick-pdf";
-import { renderStampPng } from "@/lib/pdf/stamp-image";
-import { usePdfPreview } from "@/lib/pdf/use-pdf-preview";
-
-const COLORS = ["#ef4444", "#2563eb", "#059669", "#d97706"];
-
-function loadImageSize(src: string) {
-  return new Promise<{ width: number; height: number }>((resolve, reject) => {
-    const image = new Image();
-    image.onload = () => resolve({ width: image.width, height: image.height });
-    image.onerror = () => reject(new Error("image"));
-    image.src = src;
-  });
-}
+import { createOverlayId, type PdfOverlay } from "@/lib/pdf/overlays";
+import { clampOverlay, overlaySizeFromImage } from "@/lib/pdf/pick-pdf";
+import { loadImageSize } from "@/lib/signatures/load-image-size";
 
 export function StampTool() {
   const { t } = useI18n();
   const copy = t.tools.stamp;
-  const presets = useMemo(
-    () => [
-      t.stamp.paid,
-      t.stamp.certified,
-      t.stamp.confidential,
-      t.stamp.approved,
-      t.stamp.received,
-      t.stamp.copyStamp,
-    ],
-    [t],
-  );
   const [file, setFile] = useState<File | null>(null);
-  const [text, setText] = useState(presets[0]);
-  const [color, setColor] = useState(COLORS[0]);
-  const [size, setSize] = useState(0.32);
   const [overlays, setOverlays] = useState<PdfOverlay[]>([]);
+  const [selectedOverlayId, setSelectedOverlayId] = useState<string | null>(null);
+  const [stampPanelOpen, setStampPanelOpen] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const preview = usePdfPreview(file);
+  const preview = useDocumentPreview(file);
   const { requestDownload, feedback } = useGuardedDownload();
 
   const addFile = useCallback(
     (files: File[]) => {
-      const pdf = pickPdfFile(files);
-      if (!pdf) {
+      const picked = pickSignableFile(files);
+      if (!picked) {
         setError(copy.errors.invalid);
         return;
       }
       setError(null);
-      setFile(pdf);
+      setFile(picked);
       setOverlays([]);
+      setStampPanelOpen(true);
     },
     [copy.errors.invalid],
   );
 
-  const place = async (x: number, y: number) => {
-    if (!text.trim()) return;
-    const dataUrl = await renderStampPng({ text: text.trim(), color });
-    const image = await loadImageSize(dataUrl);
-    const dims = overlaySizeFromImage(
-      image.width,
-      image.height,
-      preview.pageSize.width,
-      preview.pageSize.height,
-      size,
-    );
-    const box = clampOverlay(x - dims.width / 2, y - dims.height / 2, dims.width, dims.height);
-    setOverlays((current) => [
-      ...current,
-      {
+  const placeStampOverlay = useCallback(
+    async (
+      dataUrl: string,
+      relativeWidth: number,
+      extra: Partial<PdfOverlay> = {},
+    ) => {
+      const image = await loadImageSize(dataUrl);
+      const dims = overlaySizeFromImage(
+        image.width,
+        image.height,
+        preview.pageSize.width,
+        preview.pageSize.height,
+        relativeWidth,
+      );
+      const box = clampOverlay(0.5 - dims.width / 2, 0.58 - dims.height / 2, dims.width, dims.height);
+      const overlay: PdfOverlay = {
         id: createOverlayId(),
         pageIndex: preview.pageIndex,
         kind: "image",
         dataUrl,
         ...box,
-      },
-    ]);
+        ...extra,
+      };
+      setOverlays((current) => [...current, overlay]);
+      setSelectedOverlayId(overlay.id);
+    },
+    [preview.pageIndex, preview.pageSize.height, preview.pageSize.width],
+  );
+
+  const selected = overlays.find((item) => item.id === selectedOverlayId) ?? null;
+
+  const resizeSelected = (relativeWidth: number) => {
+    if (!selected) return;
+    const aspect = selected.height / Math.max(selected.width, 0.0001);
+    const nextH = relativeWidth * aspect;
+    const patch = clampOverlay(selected.x, selected.y, relativeWidth, nextH);
+    setOverlays((current) =>
+      current.map((item) => (item.id === selected.id ? { ...item, ...patch } : item)),
+    );
   };
 
   const download = async () => {
@@ -93,8 +91,9 @@ export function StampTool() {
     setProcessing(true);
     setError(null);
     try {
-      const bytes = await applyOverlays(file, overlays);
-      downloadBytes(bytes, file.name.replace(/\.pdf$/i, "") + "-stamped.pdf");
+      const { bytes, extension, mime } = await exportWithOverlays(file, overlays);
+      const base = file.name.replace(/\.[^.]+$/, "");
+      downloadBytes(bytes, `${base}-stamped.${extension}`, mime);
     } catch {
       setError(copy.errors.failed);
     } finally {
@@ -104,72 +103,41 @@ export function StampTool() {
 
   return (
     <ToolShell toolId="stamp" icon={Stamp}>
-      <div className="space-y-6">
+      <div className="min-w-0 space-y-3">
         {!file ? (
           <FileDropzone title={t.common.dropzoneTitle} hint={copy.hint} onFiles={addFile} />
         ) : (
           <>
-            <div className="glass-card space-y-4 rounded-2xl border-slate-800/60 p-4">
-              <p className="text-xs font-medium uppercase tracking-wider text-gray-500">
-                {t.stamp.presetsLabel}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {presets.map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setText(item)}
-                    className={cn(
-                      "rounded-full border px-3 py-1.5 text-xs font-semibold",
-                      text === item
-                        ? "border-rose-400/40 bg-rose-500/15 text-rose-200"
-                        : "border-slate-800/60 text-gray-300 hover:border-slate-700",
-                    )}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-              <label className="block text-sm text-gray-400">
-                {t.stamp.customLabel}
-                <input
-                  className="input-field mt-2"
-                  value={text}
-                  onChange={(event) => setText(event.target.value)}
-                  placeholder={t.stamp.customPlaceholder}
-                />
-              </label>
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-sm text-gray-400">{t.stamp.color}</span>
-                {COLORS.map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setColor(item)}
-                    className={cn(
-                      "h-7 w-7 rounded-full ring-2 ring-offset-2 ring-offset-background",
-                      color === item ? "ring-white" : "ring-transparent",
-                    )}
-                    style={{ background: item }}
-                    aria-label={item}
-                  />
-                ))}
-              </div>
-              <label className="block text-sm text-gray-400">
-                {t.stamp.size}
-                <input
-                  type="range"
-                  min={0.16}
-                  max={0.6}
-                  step={0.01}
-                  value={size}
-                  onChange={(event) => setSize(Number(event.target.value))}
-                  className="mt-2 w-full"
-                />
-              </label>
-              <p className="text-xs text-gray-500">{t.stamp.placeHint}</p>
-            </div>
-
+            <StampInlinePanel
+              open={stampPanelOpen}
+              onClose={() => setStampPanelOpen(false)}
+              onInsert={(payload) => {
+                void placeStampOverlay(payload.dataUrl, payload.relativeWidth, {
+                  documentStampMeta: payload.meta,
+                  color: payload.meta.color,
+                });
+              }}
+            />
+            {!stampPanelOpen ? (
+              <button
+                type="button"
+                className="btn-secondary w-full text-sm"
+                onClick={() => setStampPanelOpen(true)}
+              >
+                {t.sign.addStamp}
+              </button>
+            ) : null}
+            {selected?.documentStampMeta ? (
+              <DocumentSelectedQuickEdit
+                overlay={selected}
+                pageSize={preview.pageSize}
+                onOverlayPatched={(id, patch) =>
+                  setOverlays((current) =>
+                    current.map((item) => (item.id === id ? { ...item, ...patch } : item)),
+                  )
+                }
+              />
+            ) : null}
             <PdfPageCanvas
               pageImage={preview.pageImage}
               pageIndex={preview.pageIndex}
@@ -177,12 +145,24 @@ export function StampTool() {
               overlays={overlays}
               loading={preview.loading}
               onPageChange={preview.setPageIndex}
-              onPlace={place}
-              onRemoveOverlay={(id) =>
-                setOverlays((current) => current.filter((item) => item.id !== id))
+              interaction="none"
+              editableOverlays
+              overlayToolbar="minimal"
+              selectedOverlayId={selectedOverlayId}
+              onSelectOverlay={setSelectedOverlayId}
+              onOverlayChange={(id, patch) =>
+                setOverlays((current) =>
+                  current.map((item) => (item.id === id ? { ...item, ...patch } : item)),
+                )
               }
+              onRemoveOverlay={(id) => {
+                setOverlays((current) => current.filter((item) => item.id !== id));
+                setSelectedOverlayId((current) => (current === id ? null : current));
+              }}
+              desktopDragHint
+              selectedOverlay={selected}
+              onSelectedOverlayResize={resizeSelected}
             />
-
             <div className="flex flex-wrap gap-3">
               <button
                 type="button"

@@ -1,130 +1,80 @@
 "use client";
 
-import { Check, Loader2, ScanText } from "lucide-react";
+import { ScanText } from "lucide-react";
 import { useCallback, useState } from "react";
 
+import { ExtractTextWorkspace } from "@/components/tools/extract-text/ExtractTextWorkspace";
 import { FileDropzone } from "@/components/tools/FileDropzone";
 import { ToolShell } from "@/components/tools/ToolShell";
 import { useI18n } from "@/i18n/context";
 import { useProtectedAction } from "@/lib/bot-protection/use-protected-action";
-import { downloadText } from "@/lib/download";
 import { useGuardedDownload } from "@/lib/use-guarded-download";
-import { extractPdfText } from "@/lib/pdf/extract-text";
 import { pickPdfFile } from "@/lib/pdf/pick-pdf";
+import { usePdfPreview } from "@/lib/pdf/use-pdf-preview";
 
 export function ExtractTextTool() {
   const { t } = useI18n();
   const copy = t.tools["extract-text"];
-  const [fileName, setFileName] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [text, setText] = useState("");
-  const [pages, setPages] = useState(0);
-  const [processing, setProcessing] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [pagesProcessed, setPagesProcessed] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const preview = usePdfPreview(file);
   const { requestDownload, feedback } = useGuardedDownload();
   const { runProtected } = useProtectedAction();
 
   const addFile = useCallback(
-    async (files: File[]) => {
+    (files: File[]) => {
       const pdf = pickPdfFile(files);
       if (!pdf) {
         setError(copy.errors.invalid);
         return;
       }
-
-      await runProtected(async () => {
-        setCopied(false);
-        setProcessing(true);
-        setFileName(pdf.name);
-        try {
-          const result = await extractPdfText(pdf);
-          setText(result.text);
-          setPages(result.pages);
-        } catch {
-          setError(copy.errors.failed);
-          setText("");
-        } finally {
-          setProcessing(false);
-        }
-      }, setError);
+      setError(null);
+      setFile(pdf);
+      setText("");
+      setPagesProcessed(0);
     },
-    [copy.errors.failed, copy.errors.invalid, runProtected],
+    [copy.errors.invalid],
   );
-
-  const copyText = async () => {
-    if (!text) return;
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1600);
-  };
 
   return (
     <ToolShell toolId="extract-text" icon={ScanText}>
-      <div className="space-y-6">
-        <FileDropzone
-          title={t.common.dropzoneTitle}
-          hint={copy.hint}
-          onFiles={(files) => void addFile(files)}
-          disabled={processing}
-        />
-
-        {processing && (
-          <p className="inline-flex items-center gap-2 text-sm text-gray-400">
-            <Loader2 className="h-4 w-4 animate-spin" />
-            {t.common.processing}
-          </p>
-        )}
-
-        {(text || fileName) && !processing && (
-          <div className="glass-card space-y-3 rounded-2xl border-slate-800/60 p-4">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <h2 className="text-sm font-semibold text-white">
-                {t.extract.resultTitle}
-              </h2>
-              <p className="text-xs text-gray-500">
-                {t.extract.pagesExtracted(pages)}
-              </p>
-            </div>
-            <textarea
-              className="input-field min-h-64 w-full min-w-0 font-mono text-sm"
-              value={text || t.extract.empty}
-              readOnly
+      <div className="min-w-0 space-y-4">
+        {!file ? (
+          <FileDropzone title={t.common.dropzoneTitle} hint={copy.hint} onFiles={addFile} />
+        ) : (
+          <>
+            <ExtractTextWorkspace
+              file={file}
+              pageImage={preview.pageImage}
+              pageIndex={preview.pageIndex}
+              numPages={preview.numPages}
+              loading={preview.loading}
+              onPageChange={preview.setPageIndex}
+              text={text}
+              setText={setText}
+              pagesProcessed={pagesProcessed}
+              setPagesProcessed={setPagesProcessed}
+              onExtractError={setError}
+              onRunProtected={(task) => runProtected(task, setError)}
+              requestDownload={requestDownload}
             />
-            <div className="flex flex-wrap gap-3">
-              <button type="button" className="btn-primary" onClick={() => void copyText()}>
-                {copied ? <Check className="h-4 w-4" /> : null}
-                {copied ? t.common.copied : copy.action}
-              </button>
-              <button
-                type="button"
-                className="btn-secondary"
-                disabled={!text}
-                onClick={() =>
-                  requestDownload(() =>
-                    downloadText(
-                      text,
-                      (fileName ?? "document").replace(/\.pdf$/i, "") + ".txt",
-                    ),
-                  )
-                }
-              >
-                {t.extract.downloadTxt}
-              </button>
-              <button
-                type="button"
-                className="btn-secondary"
-                onClick={() => {
-                  setFileName(null);
-                  setText("");
-                  setPages(0);
-                }}
-              >
-                {t.common.clear}
-              </button>
-            </div>
-          </div>
+            <button
+              type="button"
+              className="btn-secondary w-full sm:w-auto"
+              onClick={() => {
+                setFile(null);
+                setText("");
+                setPagesProcessed(0);
+                setError(null);
+              }}
+            >
+              {t.common.clear}
+            </button>
+          </>
         )}
-        {error && <p className="text-sm text-rose-400">{error}</p>}
+        {error ? <p className="text-sm text-rose-400">{error}</p> : null}
         {feedback}
       </div>
     </ToolShell>
