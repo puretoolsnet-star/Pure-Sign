@@ -7,9 +7,16 @@ import { localizedPath } from "@/lib/i18n/routing";
 
 const LOCALE_PREFIX = new RegExp(`^/(${LOCALES.join("|")})(/|$)`);
 
+const CRAWLER_PASSTHROUGH = new Set([
+  "/ads.txt",
+  "/robots.txt",
+  "/sitemap.xml",
+  "/manifest.webmanifest",
+]);
+
 function isPassthroughPath(pathname: string): boolean {
   return (
-    pathname === "/ads.txt" ||
+    CRAWLER_PASSTHROUGH.has(pathname) ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/og") ||
     /\.[a-zA-Z0-9]+$/.test(pathname)

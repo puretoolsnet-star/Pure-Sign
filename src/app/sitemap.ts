@@ -3,7 +3,6 @@ import type { MetadataRoute } from "next";
 import { LOCALES } from "@/i18n/locales";
 import { SEO_PAGE_IDS, type SeoPageId } from "@/i18n/seo/copy";
 import { localizedPath } from "@/lib/i18n/routing";
-import { buildOgImageUrl } from "@/lib/seo/og";
 import {
   buildLanguageAlternates,
   canonicalAbsoluteUrl,
@@ -36,7 +35,6 @@ function entry(locale: (typeof LOCALES)[number], page: SeoPageId) {
     alternates: {
       languages: buildLanguageAlternates(path),
     },
-    images: [canonicalAbsoluteUrl(buildOgImageUrl(locale, page))],
   } satisfies MetadataRoute.Sitemap[number];
 }
 
