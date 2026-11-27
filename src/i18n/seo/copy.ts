@@ -183,7 +183,7 @@ export const SEO_COPY: SeoCatalog = {
     uk: {
       title: "Штамп і печатка на PDF онлайн | PureSign",
       description:
-        "Накладайте прозорі штампи «Оплачено», «Згідно з оригіналом» або власний текст на PDF локально у браузері.",
+        "Накладайте прозорі штампи «Оплачено», «Згідно з оригіналом» або власний текст на PDF локально у браузері. Безкоштовно, без реєстрації й без завантаження файлу на сервер.",
       keywords: [
         "штамп PDF",
         "печатка PDF онлайн",
@@ -196,7 +196,7 @@ export const SEO_COPY: SeoCatalog = {
     en: {
       title: "PDF stamp and seal online | PureSign",
       description:
-        "Place transparent stamps such as Paid or Certified true copy on a PDF locally in your browser — no upload.",
+        "Place transparent stamps such as Paid or Certified true copy on a PDF locally in your browser — free, no signup, and no server upload.",
       keywords: [
         "PDF stamp online",
         "paid stamp PDF",
@@ -208,7 +208,7 @@ export const SEO_COPY: SeoCatalog = {
     de: {
       title: "PDF-Stempel und Siegel online | PureSign",
       description:
-        "Transparente Stempel wie Bezahlt oder Kopie der Urschrift lokal im Browser auf ein PDF setzen — ohne Upload.",
+        "Transparente Stempel wie Bezahlt oder Kopie der Urschrift lokal im Browser auf ein PDF setzen. Kostenlos, ohne Konto und ohne Server-Upload.",
       keywords: [
         "PDF Stempel online",
         "Bezahlt Stempel",
@@ -220,7 +220,7 @@ export const SEO_COPY: SeoCatalog = {
     fr: {
       title: "Tampon et sceau PDF en ligne | PureSign",
       description:
-        "Posez des tampons transparents Payé ou Conforme à l’original sur un PDF en local dans le navigateur.",
+        "Posez des tampons transparents Payé ou Conforme à l’original sur un PDF en local dans le navigateur. Gratuit, sans compte et sans envoi sur un serveur.",
       keywords: [
         "tampon PDF",
         "sceau PDF",
@@ -232,7 +232,7 @@ export const SEO_COPY: SeoCatalog = {
     es: {
       title: "Sello y tampón PDF online | PureSign",
       description:
-        "Coloca sellos transparentes como Pagado o Conforme al original en un PDF en local, sin subir el archivo.",
+        "Coloca sellos transparentes como Pagado o Conforme al original en un PDF en local. Gratis, sin cuenta y sin subir el archivo al servidor.",
       keywords: [
         "sello PDF",
         "tampón PDF",
@@ -244,7 +244,7 @@ export const SEO_COPY: SeoCatalog = {
     pl: {
       title: "Stempel i pieczęć PDF online | PureSign",
       description:
-        "Nakładaj przezroczyste stemple «Opłacono» i «Zgodnie z oryginałem» na PDF lokalnie w przeglądarce.",
+        "Nakładaj przezroczyste stemple «Opłacono» i «Zgodnie z oryginałem» na PDF lokalnie w przeglądarce. Za darmo, bez konta i bez wysyłania pliku na serwer.",
       keywords: [
         "stempel PDF",
         "pieczęć PDF",

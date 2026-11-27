@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 import { getSeoCopy } from "@/i18n/seo/copy";
 import { parseOgImageQuery } from "@/lib/seo/og";
-import { getSiteUrl } from "@/lib/seo/site";
+import { CANONICAL_SITE_URL } from "@/lib/seo/site";
 
 const WIDTH = 1200;
 const HEIGHT = 630;
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
 
   const { locale, page } = parsed;
   const copy = getSeoCopy(page, locale);
-  const host = getSiteUrl().replace(/^https?:\/\//, "");
+  const host = CANONICAL_SITE_URL.replace(/^https?:\/\//, "");
 
   const title =
     copy.title.length > 110 ? `${copy.title.slice(0, 107)}…` : copy.title;
@@ -107,6 +107,10 @@ export async function GET(request: NextRequest) {
     {
       width: WIDTH,
       height: HEIGHT,
+      headers: {
+        "X-Robots-Tag": "noindex, nofollow",
+        "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800",
+      },
     },
   );
 }

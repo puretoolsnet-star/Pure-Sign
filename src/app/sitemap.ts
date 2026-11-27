@@ -10,7 +10,7 @@ import {
   seoPath,
 } from "@/lib/seo/site";
 
-const LAST_MODIFIED = new Date("2026-11-18");
+const LAST_MODIFIED = new Date("2026-11-27");
 
 type SitemapChangeFrequency = NonNullable<
   MetadataRoute.Sitemap[number]["changeFrequency"]

@@ -9,6 +9,7 @@ const LOCALE_PREFIX = new RegExp(`^/(${LOCALES.join("|")})(/|$)`);
 
 function isPassthroughPath(pathname: string): boolean {
   return (
+    pathname === "/ads.txt" ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/og") ||
     /\.[a-zA-Z0-9]+$/.test(pathname)

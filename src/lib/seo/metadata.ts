@@ -6,7 +6,6 @@ import { getSeoCopy, type SeoPageId } from "@/i18n/seo/copy";
 import { localizedPath } from "@/lib/i18n/routing";
 import { buildOgImageUrl } from "@/lib/seo/og";
 import {
-  absoluteUrl,
   buildLanguageAlternates,
   canonicalAbsoluteUrl,
   getSiteUrl,
@@ -18,11 +17,11 @@ export function buildPageMetadata(page: SeoPageId, locale: Locale): Metadata {
   const copy = getSeoCopy(page, locale);
   const path = seoPath(page);
   const canonical = canonicalAbsoluteUrl(localizedPath(locale, path));
-  const ogImage = absoluteUrl(buildOgImageUrl(locale, page));
+  const ogImage = canonicalAbsoluteUrl(buildOgImageUrl(locale, page));
   const languages = buildLanguageAlternates(path);
 
   return {
-    title: copy.title,
+    title: { absolute: copy.title },
     description: copy.description,
     keywords: copy.keywords,
     authors: [{ name: "PureSign" }],

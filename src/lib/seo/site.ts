@@ -7,13 +7,10 @@ export { DEFAULT_LOCALE, LOCALES };
 /** Permanent public origin for sitemap, robots, and indexation URLs. */
 export const CANONICAL_SITE_URL = "https://sign.kixt.net";
 
+/** Public origin for metadata, OG assets, and absolute URLs (never preview hosts). */
 export function getSiteUrl(): string {
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (fromEnv) return fromEnv.replace(/\/$/, "");
-
-  const vercel = process.env.VERCEL_URL?.trim();
-  if (vercel) return `https://${vercel.replace(/\/$/, "")}`;
-
   return CANONICAL_SITE_URL;
 }
 

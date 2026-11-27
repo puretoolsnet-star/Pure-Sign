@@ -24,7 +24,7 @@ const SCRIPT_UA_RE =
   /(?:^| )(?:curl|wget|python-requests|python-urllib|scrapy|httpclient|libwww-perl|go-http-client|java\/|okhttp|postmanruntime|insomnia|axios\/|node-fetch|httpie)/i;
 
 const SKIP_RATE_LIMIT_RE =
-  /^\/(og|robots\.txt|sitemap\.xml|manifest\.webmanifest|manifest\.json|icon|apple-icon)(\/|$)/;
+  /^\/(og|ads\.txt|robots\.txt|sitemap\.xml|manifest\.webmanifest|manifest\.json|icon|apple-icon)(\/|$)/;
 
 type ClientKind = "crawler" | "bot" | "human";
 
